@@ -1,15 +1,32 @@
+/* ===== board.css ===== */
+
+/* Struktur dasar agar footer sticky */
+html,
 body {
-  font-family: 'Segoe UI', sans-serif;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  min-height: 100vh;
+  overflow-x: hidden;
+  /* cegah warna belang di kanan */
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+/* Supaya konten utama mendorong footer ke bawah */
+.container {
+  flex: 1 0 auto;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #333;
-  margin: 0;
   padding: 20px;
+  /* sesuai padding lama */
 }
 
+/* Card styling */
 .card {
   background: #fff;
   border-radius: 20px;
@@ -21,36 +38,14 @@ body {
   animation: fadeIn 0.6s ease;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* Animasi trophy */
 .trophy {
   font-size: 5em;
   margin-bottom: 10px;
   animation: bounce 1s infinite;
 }
 
-@keyframes bounce {
-
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
+/* Title & winner */
 h1 {
   color: #667eea;
   margin-bottom: 10px;
@@ -63,6 +58,7 @@ h1 {
   margin-bottom: 30px;
 }
 
+/* Scores */
 .scores {
   display: flex;
   justify-content: space-around;
@@ -94,6 +90,7 @@ h1 {
   font-weight: bold;
 }
 
+/* Buttons */
 .actions {
   margin-top: 20px;
   display: flex;
@@ -130,6 +127,41 @@ h1 {
 .btn-secondary:hover {
   background: #667eea;
   color: #fff;
+}
+
+/* ===== FOOTER ADJUSTMENT UNTUK BOARD.HTML ===== */
+#footer-container {
+  width: 100%;
+  position: relative;
+  /* biar tidak ikut centering */
+  margin-top: 40px;
+  align-self: stretch;
+  /* biar flex container tidak mengecilkan lebar */
+}
+
+/* Animasi & confetti (tetap dari board.css lama) */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .confetti {
