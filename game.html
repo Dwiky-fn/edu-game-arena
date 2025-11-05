@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tarik Tambang Kuis - Edu Game Arena</title>
+  <link rel="stylesheet" href="styles/game.css" />
+</head>
+
+<body>
+  <div class="container">
+    <!-- Game Screen -->
+    <div class="game-screen active">
+      <!-- Header -->
+      <div class="game-header">
+        <div class="timer" id="timer">1:00</div>
+        <div class="score-display">
+          <div class="team-score">
+            <div class="label" id="team-a-label">Tim A</div>
+            <div class="score" id="team-a-score">0</div>
+          </div>
+          <div class="team-score">
+            <div class="label" id="team-b-label">Tim B</div>
+            <div class="score" id="team-b-score">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Area utama permainan -->
+      <div class="main-play-area">
+        <!-- Soal Tim A -->
+        <div class="question-card">
+          <h3 id="question-number-a">Tim A</h3>
+          <div class="question-text" id="question-text-a"></div>
+          <br>
+          <div class="options-container" id="options-container-a"></div>
+        </div>
+      
+        <!-- Rope & karakter -->
+        <div class="rope-container">
+          <div class="teams-display">
+            <div class="team-card team-a" id="team-a-card">
+              <h3 id="team-a-name">Tim A</h3>
+            </div>
+            <div class="team-card team-b" id="team-b-card">
+              <h3 id="team-b-name">Tim B</h3>
+            </div>
+          </div>
+      
+          <div class="rope-visual">
+            <img src="assets/tug-of-war.png" alt="Tug of War" class="rope-img" id="tug-of-war">
+          </div>
+        </div>
+      
+        <!-- Soal Tim B -->
+        <div class="question-card">
+          <h3 id="question-number-b">Tim B</h3>
+          <div class="question-text" id="question-text-b"></div>
+          <br>
+          <div class="options-container" id="options-container-b"></div>
+        </div>
+      </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="js/game.js"></script>
+</body>
+
+</html>

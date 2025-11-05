@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edu Game Arena - Beranda</title>
+  <link rel="stylesheet" href="styles/home.css" />
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>🎮 Edu Game Arena</h1>
+      <p class="subtitle">Belajar Sambil Bermain, Pintar Penuh Ceria!</p>
+    </header>
+
+    <div class="nav-buttons">
+      <a href="banksoal.html" class="nav-btn">📚 Bank Soal</a>
+      <a href="#" class="nav-btn" onclick="showInfo(); return false;">ℹ️ Tentang</a>
+    </div>
+
+    <div class="games-grid">
+      <div class="game-card available" onclick="window.location.href='setup.html'">
+        <div class="game-icon">🤝</div>
+        <div class="game-title">Tarik Tambang Kuis</div>
+        <div class="game-desc">
+          Dua tim bertarung menjawab soal! Tim dengan jawaban benar terbanyak dalam 1 menit menang!
+        </div>
+        <button class="play-btn">Mainkan Sekarang</button>
+      </div>
+
+      <div class="game-card coming-soon">
+        <div class="game-icon">🧩</div>
+        <div class="game-title">Puzzle Kata</div>
+        <div class="game-desc">
+          Susun kata dari huruf acak dan kumpulkan poin sebanyak mungkin!
+        </div>
+        <div class="coming-soon-badge">Akan Datang</div>
+      </div>
+
+      <div class="game-card coming-soon">
+        <div class="game-icon">🎯</div>
+        <div class="game-title">Target Tepat</div>
+        <div class="game-desc">
+          Tembak jawaban yang benar sebelum waktu habis!
+        </div>
+        <div class="coming-soon-badge">Akan Datang</div>
+      </div>
+
+      <div class="game-card coming-soon">
+        <div class="game-icon">🏃</div>
+        <div class="game-title">Lari Cerdas</div>
+        <div class="game-desc">
+          Berlari sambil menjawab soal, hindari jawaban yang salah!
+        </div>
+        <div class="coming-soon-badge">Akan Datang</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/home.js"></script>
+</body>
+
+</html>

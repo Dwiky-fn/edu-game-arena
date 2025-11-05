@@ -1,0 +1,150 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  color: white;
+  margin-bottom: 40px;
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+  font-size: 1.2em;
+  opacity: 0.9;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.nav-btn {
+  background: white;
+  color: #667eea;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.nav-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  padding: 20px 0;
+}
+
+.game-card {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.game-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.game-card.available {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.game-card.coming-soon {
+  background: #f0f0f0;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.game-card.coming-soon:hover {
+  transform: none;
+}
+
+.game-icon {
+  font-size: 4em;
+  margin-bottom: 20px;
+}
+
+.game-title {
+  font-size: 1.8em;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.game-desc {
+  font-size: 1em;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.play-btn {
+  background: white;
+  color: #f5576c;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.play-btn:hover {
+  transform: scale(1.05);
+}
+
+.coming-soon-badge {
+  background: #ffd93d;
+  color: #333;
+  padding: 8px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2em;
+  }
+
+  .games-grid {
+    grid-template-columns: 1fr;
+  }
+}

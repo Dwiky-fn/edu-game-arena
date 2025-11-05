@@ -1,0 +1,230 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+/* Screens */
+.setup-screen,
+.game-screen {
+  display: none;
+  padding: 20px;
+}
+
+.setup-screen.active,
+.game-screen.active {
+  display: block;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* HEADER */
+.game-header {
+  background: white;
+  border-radius: 15px;
+  padding: 20px 100px 20px 100px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 800px;
+}
+
+.timer {
+  font-size: 2em;
+  font-weight: bold;
+  color: #f5576c;
+}
+
+.score-display {
+  display: flex;
+  gap: 30px;
+}
+
+.team-score {
+  text-align: center;
+}
+
+.team-score .label {
+  font-size: .9em;
+  color: #666;
+}
+
+.team-score .score {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #667eea;
+}
+
+/* ROPE AREA */
+.rope-container {
+  background: white;
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.teams-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+
+.team-card {
+  flex: 1;
+  text-align: center;
+  padding: 20px;
+  border-radius: 15px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+
+.team-a {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.team-b {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+/* SPRITE TUG OF WAR */
+.rope-visual {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.rope-img {
+  position: absolute;
+  width: 80%;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  image-rendering: pixelated;
+  transition: transform 0.5s ease;
+}
+
+/* QUESTIONS */
+.question-area {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.question-card {
+  flex: 1;
+  min-width: 300px;
+  background: white;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.question-card h3 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.options-container {
+  display: grid;
+  gap: 10px;
+}
+
+.option-btn {
+  padding: 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.option-btn.correct {
+  background: #d4edda;
+  border-color: #28a745;
+}
+
+.option-btn.incorrect {
+  background: #f8d7da;
+  border-color: #dc3545;
+}
+
+.option-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ====== Layout versi laptop / desktop ====== */
+@media (min-width: 992px) {
+
+  /* Bungkus utama agar center dan sejajar */
+  .game-screen.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .game-header {
+    background: white;
+    border-radius: 15px;
+    padding: 20px 100px 20px 100px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 800px;
+  }
+
+  /* Susunan 3 bagian utama: kiri (Tim A), tengah (rope), kanan (Tim B) */
+  .main-play-area {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  /* Pastikan rope-container tidak terlalu lebar */
+  .rope-container {
+    flex: 0 0 auto;
+    width: 600px;
+    margin: 0;
+  }
+
+  /* Kartu soal kiri dan kanan */
+  .question-card {
+    flex: 0 0 300px;
+    margin: 0;
+  }
+
+  /* Supaya tidak double tampil di bawah tali */
+  .question-area {
+    display: none;
+  }
+
+  /* Versi desktop – tim A di kiri, tali di tengah, tim B di kanan */
+  #question-number-a {
+    order: 1;
+  }
+
+  #question-number-b {
+    order: 3;
+  }
+}

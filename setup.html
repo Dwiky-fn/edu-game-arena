@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Setup Permainan - Tarik Tambang Kuis</title>
+  <link rel="stylesheet" href="styles/setup.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="setup-card">
+      <h1>🤝 Tarik Tambang Kuis</h1>
+      <p class="subtitle">Isi nama tim dan pilih folder soal!</p>
+      <div class="form-group">
+        <label>Nama Tim A</label>
+        <input id="team-a-name" type="text" placeholder="Contoh: Tim Merah">
+      </div>
+      <div class="form-group">
+        <label>Nama Tim B</label>
+        <input id="team-b-name" type="text" placeholder="Contoh: Tim Biru">
+      </div>
+      <div class="form-group">
+        <label>Pilih Folder Soal</label>
+        <select id="folder-select"></select>
+      </div>
+      <button class="btn-start" onclick="startGame()">Mulai Permainan</button>
+      <a href="index.html" class="back-link">← Kembali</a>
+    </div>
+  </div>
+
+  <script src="js/setup.js"></script>
+</body>
+
+</html>

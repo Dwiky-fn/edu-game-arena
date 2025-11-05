@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bank Soal - Edu Game Arena</title>
+  <link rel="stylesheet" href="styles/banksoal.css" />
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <div class="header-title">
+        <span>📚</span>
+        <h1>Bank Soal</h1>
+      </div>
+      <a href="../index.html" class="back-btn">← Kembali</a>
+    </header>
+
+    <div class="main-content">
+      <div class="toolbar">
+        <div class="breadcrumb">
+          <span onclick="showFolders()">📁 Folder</span>
+          <span id="breadcrumb-folder" style="display:none;"> / <span id="current-folder-name"></span></span>
+        </div>
+        <button class="add-btn" id="add-btn" onclick="showAddFolderModal()">
+          ➕ Tambah Folder
+        </button>
+      </div>
+
+      <div id="folders-view">
+        <div class="folders-grid" id="folders-container"></div>
+      </div>
+
+      <div id="questions-view" style="display:none;">
+        <div class="questions-list" id="questions-container"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Tambah/Edit Folder -->
+  <div class="modal" id="folder-modal">
+    <div class="modal-content">
+      <div class="modal-header" id="folder-modal-title">Tambah Folder Baru</div>
+      <div class="form-group">
+        <label for="folder-name">Nama Folder</label>
+        <input type="text" id="folder-name" placeholder="Contoh: Materi Surga dan Neraka" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeFolderModal()">Batal</button>
+        <button class="btn btn-primary" onclick="saveFolderData()">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Tambah/Edit Soal -->
+  <div class="modal" id="question-modal">
+    <div class="modal-content">
+      <div class="modal-header" id="question-modal-title">Tambah Soal Baru</div>
+      <div class="form-group">
+        <label for="question-text">Pertanyaan</label>
+        <textarea id="question-text" placeholder="Masukkan pertanyaan..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="option-a">Opsi A</label>
+        <input type="text" id="option-a" placeholder="Opsi A" />
+      </div>
+      <div class="form-group">
+        <label for="option-b">Opsi B</label>
+        <input type="text" id="option-b" placeholder="Opsi B" />
+      </div>
+      <div class="form-group">
+        <label for="option-c">Opsi C</label>
+        <input type="text" id="option-c" placeholder="Opsi C" />
+      </div>
+      <div class="form-group">
+        <label for="option-d">Opsi D</label>
+        <input type="text" id="option-d" placeholder="Opsi D" />
+      </div>
+      <div class="form-group">
+        <label for="correct-answer">Jawaban Benar</label>
+        <select id="correct-answer">
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeQuestionModal()">Batal</button>
+        <button class="btn btn-primary" onclick="saveQuestionData()">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/banksoal.js"></script>
+</body>
+
+</html>
