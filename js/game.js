@@ -25,6 +25,7 @@ window.onload = () => {
     return;
   }
 
+  // Buat daftar soal tersisa untuk tiap tim
   gameState = {
     teamAName: setup.teamA,
     teamBName: setup.teamB,
@@ -34,11 +35,11 @@ window.onload = () => {
     timeLeft: 60,
     teamAQuestions: shuffle([...folder.soal]),
     teamBQuestions: shuffle([...folder.soal]),
-    currentAIndex: 0,
-    currentBIndex: 0,
+    teamAPending: shuffle([...folder.soal]),
+    teamBPending: shuffle([...folder.soal]),
+    currentAQuestion: null,
+    currentBQuestion: null,
     interval: null,
-    finishedA: false,
-    finishedB: false,
   };
 
   document.getElementById('team-a-label').textContent = setup.teamA;
@@ -53,22 +54,18 @@ window.onload = () => {
 
 function renderQuestion(team) {
   const isA = team === 'A';
-  const index = isA ? gameState.currentAIndex : gameState.currentBIndex;
-  const qList = isA ? gameState.teamAQuestions : gameState.teamBQuestions;
-
+  const pending = isA ? gameState.teamAPending : gameState.teamBPending;
+  const container = document.getElementById(`options-container-${team.toLowerCase()}`);
   const text = document.getElementById(`question-text-${team.toLowerCase()}`);
-  const container = document.getElementById(
-    `options-container-${team.toLowerCase()}`
-  );
 
-  if (!qList || index >= qList.length) {
-    // Tandai tim ini selesai soal, tapi jangan panggil checkWinner()
-    if (isA) gameState.finishedA = true;
-    else gameState.finishedB = true;
+  if (!pending || pending.length === 0) {
+    // Tidak ada soal tersisa untuk tim ini, tampilkan kosong
+    if (text) text.textContent = "Semua soal sudah dijawab benar!";
+    if (container) container.innerHTML = "";
     return;
   }
 
-  const q = qList[index];
+  const q = pending[0]; // ambil soal pertama dari pending
   if (text) text.textContent = q.pertanyaan;
   if (!container) return;
   container.innerHTML = '';
@@ -80,13 +77,14 @@ function renderQuestion(team) {
     btn.onclick = () => handleAnswer(team, opt.toUpperCase(), q, btn);
     container.appendChild(btn);
   });
+
+  if (isA) gameState.currentAQuestion = q;
+  else gameState.currentBQuestion = q;
 }
 
 function handleAnswer(team, selected, q, btn) {
   const correct = (q.jawaban_benar || '').toString().toUpperCase();
-  const container = document.getElementById(
-    `options-container-${team.toLowerCase()}`
-  );
+  const container = document.getElementById(`options-container-${team.toLowerCase()}`);
   if (!container) return;
 
   container.querySelectorAll('button').forEach((b) => {
@@ -97,6 +95,9 @@ function handleAnswer(team, selected, q, btn) {
     b.disabled = true;
   });
 
+  const isA = team === 'A';
+  let pending = isA ? gameState.teamAPending : gameState.teamBPending;
+
   if (selected === correct) {
     if (team === 'A') {
       gameState.teamAScore++;
@@ -105,12 +106,14 @@ function handleAnswer(team, selected, q, btn) {
       gameState.teamBScore++;
       moveRope(8);
     }
+    // hapus soal yang sudah benar dari pending
+    pending.shift();
+  } else {
+    // soal salah tetap di pending, jadi muncul lagi
+    pending.push(pending.shift());
   }
 
   updateScore();
-
-  if (team === 'A') gameState.currentAIndex++;
-  else gameState.currentBIndex++;
 
   setTimeout(() => renderQuestion(team), 700);
 }
@@ -125,8 +128,6 @@ function moveRope(delta) {
     const shift = (gameState.ropePos - 50) * 2;
     tug.style.transform = `translate(${shift}px, -50%)`;
   }
-
-  // Jangan panggil checkWinner() di sini
 }
 
 function updateScore() {
@@ -143,8 +144,11 @@ function startTimer() {
     const s = gameState.timeLeft % 60;
     timerEl.textContent = `${m}:${s.toString().padStart(2, '0')}`;
 
-    // Jika waktu habis atau kedua tim selesai soal
-    if (gameState.timeLeft <= 0 || (gameState.finishedA && gameState.finishedB)) {
+    // game selesai jika timer habis atau tidak ada soal tersisa di kedua tim
+    if (
+      gameState.timeLeft <= 0 ||
+      (gameState.teamAPending.length === 0 && gameState.teamBPending.length === 0)
+    ) {
       clearInterval(gameState.interval);
       checkWinner();
     }
