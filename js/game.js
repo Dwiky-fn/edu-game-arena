@@ -37,6 +37,8 @@ window.onload = () => {
     currentAIndex: 0,
     currentBIndex: 0,
     interval: null,
+    finishedA: false,
+    finishedB: false,
   };
 
   document.getElementById('team-a-label').textContent = setup.teamA;
@@ -54,17 +56,19 @@ function renderQuestion(team) {
   const index = isA ? gameState.currentAIndex : gameState.currentBIndex;
   const qList = isA ? gameState.teamAQuestions : gameState.teamBQuestions;
 
-  if (!qList || index >= qList.length) {
-    checkWinner();
-    return;
-  }
-
-  const q = qList[index];
   const text = document.getElementById(`question-text-${team.toLowerCase()}`);
   const container = document.getElementById(
     `options-container-${team.toLowerCase()}`
   );
 
+  if (!qList || index >= qList.length) {
+    // Tandai tim ini selesai soal, tapi jangan panggil checkWinner()
+    if (isA) gameState.finishedA = true;
+    else gameState.finishedB = true;
+    return;
+  }
+
+  const q = qList[index];
   if (text) text.textContent = q.pertanyaan;
   if (!container) return;
   container.innerHTML = '';
@@ -96,10 +100,10 @@ function handleAnswer(team, selected, q, btn) {
   if (selected === correct) {
     if (team === 'A') {
       gameState.teamAScore++;
-      moveRope(-8); // arah ke kiri
+      moveRope(-8);
     } else {
       gameState.teamBScore++;
-      moveRope(8); // arah ke kanan
+      moveRope(8);
     }
   }
 
@@ -117,15 +121,12 @@ function moveRope(delta) {
   if (gameState.ropePos < 0) gameState.ropePos = 0;
 
   const tug = document.getElementById('tug-of-war');
-
   if (tug) {
     const shift = (gameState.ropePos - 50) * 2;
     tug.style.transform = `translate(${shift}px, -50%)`;
   }
 
-  if (gameState.ropePos >= 100 || gameState.ropePos <= 0) {
-    setTimeout(checkWinner, 800);
-  }
+  // Jangan panggil checkWinner() di sini
 }
 
 function updateScore() {
@@ -141,7 +142,9 @@ function startTimer() {
     const m = Math.floor(gameState.timeLeft / 60);
     const s = gameState.timeLeft % 60;
     timerEl.textContent = `${m}:${s.toString().padStart(2, '0')}`;
-    if (gameState.timeLeft <= 0) {
+
+    // Jika waktu habis atau kedua tim selesai soal
+    if (gameState.timeLeft <= 0 || (gameState.finishedA && gameState.finishedB)) {
       clearInterval(gameState.interval);
       checkWinner();
     }
@@ -149,7 +152,6 @@ function startTimer() {
 }
 
 function checkWinner() {
-  clearInterval(gameState.interval);
   let winner = 'Seri';
   if (gameState.teamAScore > gameState.teamBScore) winner = gameState.teamAName;
   else if (gameState.teamBScore > gameState.teamAScore)
