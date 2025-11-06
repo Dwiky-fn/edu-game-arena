@@ -59,10 +59,10 @@ function renderQuestion(team) {
   const text = document.getElementById(`question-text-${team.toLowerCase()}`);
 
   if (!pending || pending.length === 0) {
-    // Tidak ada soal tersisa untuk tim ini, tampilkan kosong
+    // Tim ini sudah menjawab semua soal benar → tampilkan info
     if (text) text.textContent = "Semua soal sudah dijawab benar!";
     if (container) container.innerHTML = "";
-    return;
+    return; // Jangan panggil checkWinner
   }
 
   const q = pending[0]; // ambil soal pertama dari pending
@@ -144,11 +144,8 @@ function startTimer() {
     const s = gameState.timeLeft % 60;
     timerEl.textContent = `${m}:${s.toString().padStart(2, '0')}`;
 
-    // game selesai jika timer habis atau tidak ada soal tersisa di kedua tim
-    if (
-      gameState.timeLeft <= 0 ||
-      (gameState.teamAPending.length === 0 && gameState.teamBPending.length === 0)
-    ) {
+    // game selesai hanya saat timer habis
+    if (gameState.timeLeft <= 0) {
       clearInterval(gameState.interval);
       checkWinner();
     }
