@@ -108,6 +108,15 @@ function handleAnswer(team, selected, q, btn) {
     }
     // hapus soal yang sudah benar dari pending
     pending.shift();
+
+    // ✅ Cek jika tim ini sudah selesai semua soal
+    if (pending.length === 0) {
+      // tim ini menang langsung
+      clearInterval(gameState.interval); // hentikan timer
+      checkWinner(team); // kirim tim yang menang
+      return;
+    }
+
   } else {
     // soal salah tetap di pending, jadi muncul lagi
     pending.push(pending.shift());
@@ -117,6 +126,7 @@ function handleAnswer(team, selected, q, btn) {
 
   setTimeout(() => renderQuestion(team), 700);
 }
+
 
 function moveRope(delta) {
   gameState.ropePos += delta;
@@ -152,11 +162,15 @@ function startTimer() {
   }, 1000);
 }
 
-function checkWinner() {
+function checkWinner(directWinner = null) {
   let winner = 'Seri';
-  if (gameState.teamAScore > gameState.teamBScore) winner = gameState.teamAName;
-  else if (gameState.teamBScore > gameState.teamAScore)
-    winner = gameState.teamBName;
+  if (directWinner) {
+    winner = directWinner;
+  } else {
+    if (gameState.teamAScore > gameState.teamBScore) winner = gameState.teamAName;
+    else if (gameState.teamBScore > gameState.teamAScore)
+      winner = gameState.teamBName;
+  }
 
   const result = {
     winner,
@@ -171,3 +185,4 @@ function checkWinner() {
   localStorage.setItem('gameResult', JSON.stringify(result));
   window.location.href = 'board.html';
 }
+
