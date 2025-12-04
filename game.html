@@ -13,70 +13,76 @@
 </head>
 
 <body>
-  <div class="container">
-    <!-- Game Screen -->
-    <div class="game-screen active">
-      <!-- Header -->
-      <div class="game-header">
-        <div class="timer" id="timer">1:00</div>
-        <div class="score-display">
-          <div class="team-score">
-            <div class="label" id="team-a-label">Tim A</div>
-            <div class="score" id="team-a-score">0</div>
-          </div>
-          <div class="team-score">
-            <div class="label" id="team-b-label">Tim B</div>
-            <div class="score" id="team-b-score">0</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Area utama permainan -->
-      <div class="main-play-area">
-      
-        <!-- Zona sentuh TIM A -->
-        <div class="team-touch-zone" id="zone-a">
-          <div class="question-card" id="card-a">
-            <h3 id="question-number-a">Tim A</h3>
-            <div class="question-text" id="question-text-a"></div>
-            <div class="options-container" id="options-container-a"></div>
-          </div>
-        </div>
-      
-        <!-- Rope -->
-        <div class="rope-container">
-          <div class="teams-display">
-            <div class="team-card team-a" id="team-a-card">
-              <h3 id="team-a-name">Tim A</h3>
+  
+  <div class="scale">
+    <div class="container">
+      <!-- Game Screen -->
+      <div class="game-screen active">
+        <!-- Header -->
+        <div class="game-header">
+          <div class="timer" id="timer">1:00</div>
+          <div class="score-display">
+            <div class="team-score">
+              <div class="label" id="team-a-label">Tim A</div>
+              <div class="score" id="team-a-score">0</div>
             </div>
-            <div class="team-card team-b" id="team-b-card">
-              <h3 id="team-b-name">Tim B</h3>
+            <div class="team-score">
+              <div class="label" id="team-b-label">Tim B</div>
+              <div class="score" id="team-b-score">0</div>
             </div>
           </div>
-          <div class="rope-visual">
-            <img src="assets/tug-of-war.png" id="tug-of-war" class="rope-img">
-          </div>
         </div>
-      
-        <!-- Zona sentuh TIM B -->
-        <div class="team-touch-zone" id="zone-b">
-          <div class="question-card" id="card-b">
-            <h3 id="question-number-b">Tim B</h3>
-            <div class="question-text" id="question-text-b"></div>
-            <div class="options-container" id="options-container-b"></div>
-          </div>
-        </div>
-      
-      </div>
 
+        <!-- Area utama permainan -->
+        <div class="main-play-area">
+        
+          <!-- Zona sentuh TIM A -->
+          <div class="team-touch-zone" id="zone-a">
+            <div class="question-card" id="card-a">
+              <h3 id="question-number-a">Tim A</h3>
+              <div class="question-text" id="question-text-a"></div>
+              <div class="options-container" id="options-container-a"></div>
+            </div>
+          </div>
+        
+          <!-- Rope -->
+          <div class="rope-container">
+            <div class="teams-display">
+              <div class="team-card team-a" id="team-a-card">
+                <h3 id="team-a-name">Tim A</h3>
+              </div>
+              <div class="team-card team-b" id="team-b-card">
+                <h3 id="team-b-name">Tim B</h3>
+              </div>
+            </div>
+            <div class="rope-visual">
+              <img src="assets/tug-of-war.png" id="tug-of-war" class="rope-img">
+            </div>
+          </div>
+        
+          <!-- Zona sentuh TIM B -->
+          <div class="team-touch-zone" id="zone-b">
+            <div class="question-card" id="card-b">
+              <h3 id="question-number-b">Tim B</h3>
+              <div class="question-text" id="question-text-b"></div>
+              <div class="options-container" id="options-container-b"></div>
+            </div>
+          </div>
+        
+        </div>
+
+        </div>
       </div>
     </div>
   </div>
-  
   <div id="footer-container"></div>
   
   <script src="js/footer.js"></script>
   <script src="js/game.js"></script>
+
+  <link rel="stylesheet" href="styles/countdown.css" />
+  <script src="js/start-countdown.js"></script>
+
 </body>
 
 </html>

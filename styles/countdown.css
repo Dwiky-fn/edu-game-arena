@@ -1,0 +1,33 @@
+.start-btn {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 12px 30px;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 2000;
+  border-radius: 12px;
+  border: none;
+
+  /* warna orange */
+  background: #ff9800;       /* orange utama */
+  color: white;
+
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+.countdown {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 80px;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 8px 25px rgba(0,0,0,0.6);
+  display: none;
+  z-index: 3000;
+}
+

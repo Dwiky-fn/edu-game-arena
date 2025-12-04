@@ -250,3 +250,11 @@ body {
   padding: 40px;
   touch-action: manipulation;
 }
+
+/* SCALE 80% UNTUK KESELURUHAN BOARD */
+.scale {
+  transform: scale(0.9);
+  transform-origin: top center;
+  margin-top: 20px; /* adjust jika perlu */
+  /* margin-bottom: -10px; adjust jika perlu */
+}

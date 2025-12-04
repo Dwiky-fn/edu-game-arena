@@ -22,7 +22,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 10px 0;
   /* sesuai padding lama */
 }
 
@@ -61,18 +61,18 @@ h1 {
 /* Scores */
 .scores {
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   gap: 20px;
 }
 
 .team {
   background: #f8f9fa;
   border-radius: 15px;
-  padding: 20px 30px;
-  width: 45%;
-  min-width: 220px;
+  padding: 20px 25px;
+  width: auto;
+  min-width: 180x;
 }
 
 .team.winner {
@@ -134,7 +134,7 @@ h1 {
   width: 100%;
   position: relative;
   /* biar tidak ikut centering */
-  margin-top: 40px;
+  margin-top: -90px;
   align-self: stretch;
   /* biar flex container tidak mengecilkan lebar */
 }
@@ -178,4 +178,12 @@ h1 {
     transform: translateY(100vh) rotate(720deg);
     opacity: 0;
   }
+}
+
+/* SCALE 80% UNTUK KESELURUHAN BOARD */
+.scale-80 {
+  transform: scale(0.8);
+  transform-origin: top center;
+  margin-top: 20px; /* adjust jika perlu */
+  /* margin-bottom: -10px; adjust jika perlu */
 }
