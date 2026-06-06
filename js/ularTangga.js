@@ -416,14 +416,16 @@ function getTileType(num, event) {
 }
 
 function getTileIcon(num, event) {
-  if (num === 1)  return '🚀';
-  if (num === 100) return '🏆';
-  if (!event)     return '';
-  if (event.type === 'ladder')   return '🪜';
-  if (event.type === 'snake')    return '🐍';
-  if (event.type === 'question') return '❓';
+  if (num === 1)  return '<img src="assets/ular-tangga/mascot.png" alt="Start" class="sl-tile-img"/>';
+  if (num === 100) return '<img src="assets/ular-tangga/trophy.png" alt="Finish" class="sl-tile-img"/>';
+  if (!event) return '';
+  if (event.type === 'ladder')   return '<img src="assets/ular-tangga/ladder.png" alt="Ladder" class="sl-tile-img"/>';
+  if (event.type === 'snake')    return '<img src="assets/ular-tangga/snake.png" alt="Snake" class="sl-tile-img"/>';
+  if (event.type === 'question') return '<img src="assets/ular-tangga/question-card.png" alt="Question" class="sl-tile-img"/>';
   return '';
 }
+
+
 
 // ─── Dice ──────────────────────────────────────────────────────
 
