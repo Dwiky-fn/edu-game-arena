@@ -180,10 +180,17 @@ h1 {
   }
 }
 
-/* SCALE 80% UNTUK KESELURUHAN BOARD */
-.scale-80 {
-  transform: scale(0.8);
-  transform-origin: top center;
-  margin-top: 20px; /* adjust jika perlu */
-  /* margin-bottom: -10px; adjust jika perlu */
+/* Board grid layout */
+.board-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.grid-section {
+  background: rgba(255,255,255,0.1);
+  border-radius: 12px;
 }

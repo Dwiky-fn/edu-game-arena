@@ -11,7 +11,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles/footer.css" />
   <link rel="stylesheet" href="styles/ularTangga.css" />
 </head>
 
@@ -19,14 +18,15 @@
 
   <!-- ===== SETUP SCREEN ===== -->
   <div id="setupScreen" class="sl-setup-screen">
+    <div class="sl-setup-bg"></div>
     <div class="sl-setup-card">
-      <div class="sl-setup-emoji">🐍🎲</div>
+      <img src="assets/ular-tangga/mascot.png" alt="Maskot" class="sl-setup-mascot" />
       <h1 class="sl-setup-title">Ular Tangga Adab</h1>
       <p class="sl-setup-tagline">Naik karena adab, turun karena sikap.</p>
 
       <form id="setupForm" class="sl-setup-form" onsubmit="return false;">
         <div class="sl-form-group">
-          <label for="playerCount" class="sl-label">Jumlah Pemain</label>
+          <label class="sl-label">Jumlah Pemain</label>
           <div class="sl-player-count-selector">
             <button type="button" class="sl-count-btn active" data-count="1" onclick="selectPlayerCount(1)">1</button>
             <button type="button" class="sl-count-btn" data-count="2" onclick="selectPlayerCount(2)">2</button>
@@ -35,12 +35,10 @@
           </div>
         </div>
 
-        <div id="playerNamesContainer" class="sl-player-names">
-          <!-- Player name inputs will be injected here -->
-        </div>
+        <div id="playerNamesContainer" class="sl-player-names"></div>
 
         <button type="button" id="startGameBtn" class="sl-btn sl-btn-primary" onclick="startGame()">
-          🎮 Mulai Game
+          Mulai Game
         </button>
       </form>
 
@@ -51,91 +49,87 @@
   <!-- ===== GAME SCREEN ===== -->
   <div id="gameScreen" class="sl-game-screen hidden">
 
-    <!-- Header -->
-    <header class="sl-header">
-      <div class="sl-header-inner">
-        <div class="sl-header-title-wrap">
-          <span class="sl-header-emoji">🐍🎲</span>
-          <div>
-            <h1 class="sl-header-title">Ular Tangga Adab</h1>
-            <p class="sl-header-tagline">Naik karena adab, turun karena sikap.</p>
-          </div>
-        </div>
-        <a href="index.html" class="sl-btn sl-btn-outline-sm">🏠 Beranda</a>
-      </div>
-    </header>
+    <!-- Full-screen game layout: sidebar (1/5) + board (4/5) -->
+    <div class="sl-game-layout">
 
-    <main class="sl-main-layout">
-
-      <!-- Left Panel: Player Info -->
+      <!-- ── SIDEBAR (1/5) ── -->
       <aside class="sl-sidebar">
-        <div class="sl-player-info-panel" id="playerInfo">
-          <!-- Player cards injected here -->
+
+        <!-- Branding -->
+        <div class="sl-sidebar-brand">
+          <img src="assets/ular-tangga/mascot.png" alt="Maskot" class="sl-sidebar-mascot" />
+          <div class="sl-sidebar-title-wrap">
+            <span class="sl-sidebar-title">Ular Tangga</span>
+            <span class="sl-sidebar-subtitle">Adab</span>
+          </div>
         </div>
 
-        <!-- Control Panel -->
-        <div class="sl-control-panel">
-          <div class="sl-turn-indicator" id="turnIndicator">Giliran: —</div>
+        <!-- Turn indicator -->
+        <div class="sl-turn-indicator" id="turnIndicator">Giliran: —</div>
 
-          <!-- Dice Visual -->
-          <div class="sl-dice-wrap">
-            <div class="sl-dice" id="diceDisplay">🎲</div>
+        <!-- Player cards -->
+        <div class="sl-player-info-panel" id="playerInfo"></div>
+
+        <!-- Dice area -->
+        <div class="sl-dice-area">
+          <div class="sl-dice-wrap" id="diceWrap">
+            <img src="assets/ular-tangga/dice.png" alt="Dadu" class="sl-dice-img" id="diceImg" />
+            <div class="sl-dice-number" id="diceNumber"></div>
           </div>
-
-          <div class="sl-dice-result" id="diceResult">Tekan tombol untuk lempar dadu!</div>
-
+          <p class="sl-dice-result" id="diceResult">Tekan tombol untuk melempar!</p>
           <button id="rollDiceBtn" class="sl-btn sl-btn-dice" onclick="rollDice()">
-            🎲 Lempar Dadu
+            Lempar Dadu
           </button>
         </div>
 
-        <!-- Message Box -->
+        <!-- Message -->
         <div class="sl-message-box" id="messageBox">
-          <p id="messageText">Game dimulai! Semoga beruntung 🌟</p>
+          <p id="messageText">Game dimulai! Semoga beruntung ✨</p>
         </div>
 
-        <button class="sl-btn sl-btn-secondary sl-reset-btn" onclick="resetGame()">🔄 Main Lagi</button>
+        <!-- Footer actions -->
+        <div class="sl-sidebar-actions">
+          <button class="sl-btn sl-btn-secondary" onclick="resetGame()">Main Lagi</button>
+          <a href="index.html" class="sl-btn sl-btn-outline">Beranda</a>
+        </div>
+
       </aside>
 
-      <!-- Board -->
-      <section class="sl-board-section">
-        <div class="sl-board" id="board">
-          <!-- 30 tiles will be injected here -->
+      <!-- ── BOARD AREA (4/5) ── -->
+      <main class="sl-board-area">
+        <div class="sl-board-wrapper">
+          <div class="sl-board" id="board">
+            <!-- 30 tiles injected by JS -->
+          </div>
         </div>
 
-        <!-- Legend -->
+        <!-- Legend bar at bottom of board -->
         <div class="sl-legend">
           <div class="sl-legend-item">
-            <span class="sl-legend-icon legend-ladder">🪜</span>
-            <span>Tangga (Naik)</span>
+            <img src="assets/ular-tangga/ladder.png" alt="Tangga" class="sl-legend-img" />
+            <span>Naik Tangga</span>
           </div>
           <div class="sl-legend-item">
-            <span class="sl-legend-icon legend-snake">🐍</span>
-            <span>Ular (Turun)</span>
+            <img src="assets/ular-tangga/snake.png" alt="Ular" class="sl-legend-img" />
+            <span>Kena Ular</span>
           </div>
           <div class="sl-legend-item">
-            <span class="sl-legend-icon legend-question">❓</span>
+            <img src="assets/ular-tangga/question-card.png" alt="Pertanyaan" class="sl-legend-img" />
             <span>Pertanyaan</span>
           </div>
-          <div class="sl-legend-item">
-            <span class="sl-legend-icon legend-normal">⬜</span>
-            <span>Kotak Biasa</span>
-          </div>
         </div>
-      </section>
+      </main>
 
-    </main>
+    </div>
   </div>
 
   <!-- ===== QUESTION MODAL ===== -->
-  <div id="questionModal" class="sl-modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="questionTitle">
+  <div id="questionModal" class="sl-modal-overlay hidden" role="dialog" aria-modal="true">
     <div class="sl-modal sl-modal-question">
-      <div class="sl-modal-icon">❓</div>
+      <img src="assets/ular-tangga/question-card.png" alt="Pertanyaan" class="sl-modal-header-img" />
       <h2 class="sl-modal-title" id="questionTitle">Pertanyaan Adab</h2>
       <p class="sl-modal-question-text" id="questionText"></p>
-      <div class="sl-options-grid" id="optionsContainer">
-        <!-- Options injected here -->
-      </div>
+      <div class="sl-options-grid" id="optionsContainer"></div>
       <div class="sl-answer-feedback hidden" id="answerFeedback">
         <p id="feedbackText"></p>
       </div>
@@ -145,35 +139,32 @@
     </div>
   </div>
 
-  <!-- ===== WIN MODAL ===== -->
-  <div id="winModal" class="sl-modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="winTitle">
-    <div class="sl-modal sl-modal-win">
-      <div class="sl-win-confetti" id="winConfetti"></div>
-      <div class="sl-modal-icon sl-win-trophy">🏆</div>
-      <h2 class="sl-modal-title" id="winTitle">Selamat!</h2>
-      <p class="sl-win-player-name" id="winPlayerName"></p>
-      <p class="sl-win-message">MasyaAllah, kamu telah menunjukkan adab yang luar biasa! Teruslah menjadi anak yang berakhlak mulia. 🌟</p>
-      <p class="sl-win-quote">"Sebelum menjadi hebat dengan ilmu, jadilah indah dengan adab."</p>
-      <div class="sl-win-actions">
-        <button class="sl-btn sl-btn-primary" onclick="resetGame()">🔄 Main Lagi</button>
-        <a href="index.html" class="sl-btn sl-btn-outline">🏠 Kembali ke Beranda</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Event Type Announcement Modal -->
+  <!-- ===== EVENT MODAL ===== -->
   <div id="eventModal" class="sl-modal-overlay hidden" role="dialog" aria-modal="true">
     <div class="sl-modal sl-modal-event">
-      <div class="sl-modal-icon" id="eventModalIcon">🪜</div>
+      <img class="sl-modal-header-img" id="eventModalImg" src="" alt="" />
       <h2 class="sl-modal-title" id="eventModalTitle"></h2>
       <p class="sl-modal-event-msg" id="eventModalMsg"></p>
       <button class="sl-btn sl-btn-primary" onclick="closeEventModal()">Lanjut ▶</button>
     </div>
   </div>
 
-  <div id="footer-container"></div>
+  <!-- ===== WIN MODAL ===== -->
+  <div id="winModal" class="sl-modal-overlay hidden" role="dialog" aria-modal="true">
+    <div class="sl-modal sl-modal-win">
+      <div class="sl-win-confetti" id="winConfetti"></div>
+      <img src="assets/ular-tangga/mascot.png" alt="Maskot" class="sl-win-mascot" />
+      <h2 class="sl-modal-title" id="winTitle">Selamat!</h2>
+      <p class="sl-win-player-name" id="winPlayerName"></p>
+      <p class="sl-win-message">MasyaAllah, kamu telah menunjukkan adab yang luar biasa! Teruslah menjadi anak yang berakhlak mulia. ✨</p>
+      <p class="sl-win-quote">"Sebelum menjadi hebat dengan ilmu, jadilah indah dengan adab."</p>
+      <div class="sl-win-actions">
+        <button class="sl-btn sl-btn-primary" onclick="resetGame()">Main Lagi</button>
+        <a href="index.html" class="sl-btn sl-btn-outline">Beranda</a>
+      </div>
+    </div>
+  </div>
 
-  <script src="js/footer.js"></script>
   <script src="js/ularTangga.js"></script>
 </body>
 
