@@ -4,101 +4,245 @@
    ============================================================ */
 
 'use strict';
-
-// ─── Constants ────────────────────────────────────────────────
-const TOTAL_TILES = 30;
-const COLS = 6;
-const ROWS = 5;
+// ─── Constants ────────────────────────────────────────────────
+const TOTAL_TILES = 100;
+const COLS = 10;
+const ROWS = 10;
 const DICE_FACES = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
 const PLAYER_COLORS = ['sl-color-0', 'sl-color-1', 'sl-color-2', 'sl-color-3'];
 const PLAYER_COLOR_HEX = ['#f6c90e', '#22d3ee', '#f97316', '#a78bfa'];
 
 // ─── Board Events Data ─────────────────────────────────────────
 const boardEvents = {
-  3: {
+  // LADDERS (Maju)
+  20: {
     type: 'ladder',
-    to: 10,
+    to: 50,
     title: 'Adab Baik 🪜',
-    message: 'Kamu mengucapkan salam kepada orang tua sebelum berangkat sekolah. MasyaAllah! Naik ke kotak 10!'
+    message: 'Kamu bersikap sopan kepada tetangga. Naik ke kotak 50!'
+  },
+  21: {
+    type: 'ladder',
+    to: 79,
+    title: 'Adab Baik 🪜',
+    message: 'Kamu membantu membersihkan rumah. Naik ke kotak 79!'
+  },
+  35: {
+    type: 'ladder',
+    to: 95,
+    title: 'Adab Baik 🪜',
+    message: 'Kamu menghormati guru di sekolah. Naik ke kotak 95!'
+  },
+  62: {
+    type: 'ladder',
+    to: 82,
+    title: 'Adab Baik 🪜',
+    message: 'Kamu selalu berkata jujur. Naik ke kotak 82!'
+  },
+  66: {
+    type: 'ladder',
+    to: 95,
+    title: 'Adab Baik 🪜',
+    message: 'Kamu berbagi makanan dengan teman. Naik ke kotak 95!'
+  },
+  69: {
+    type: 'ladder',
+    to: 89,
+    title: 'Adab Baik 🪜',
+    message: 'Kamu menyayangi hewan peliharaan. Naik ke kotak 89!'
+  },
+  90: {
+    type: 'ladder',
+    to: 91,
+    title: 'Adab Baik 🪜',
+    message: 'Kamu membantu adik belajar. Naik ke kotak 91!'
+  },
+
+  // SNAKES (Mundur / Perosotan)
+  22: {
+    type: 'snake',
+    to: 17,
+    title: 'Sikap Kurang Baik 🐍',
+    message: 'Kamu merebut mainan adik secara kasar. Turun ke kotak 17.'
+  },
+  57: {
+    type: 'snake',
+    to: 43,
+    title: 'Sikap Kurang Baik 🐍',
+    message: 'Kamu tidak mendengarkan penjelasan guru. Turun ke kotak 43.'
+  },
+  75: {
+    type: 'snake',
+    to: 68,
+    title: 'Sikap Kurang Baik 🐍',
+    message: 'Kamu marah-marah saat dinasihati. Turun ke kotak 68.'
+  },
+  84: {
+    type: 'snake',
+    to: 78,
+    title: 'Sikap Kurang Baik 🐍',
+    message: 'Kamu berbohong kepada temanmu. Turun ke kotak 78.'
+  },
+  92: {
+    type: 'snake',
+    to: 73,
+    title: 'Sikap Kurang Baik 🐍',
+    message: 'Kamu membuang sampah sembarangan. Turun ke kotak 73.'
+  },
+
+  // QUESTIONS (Pertanyaan)
+  2: {
+    type: 'question',
+    title: 'Kuis Matematika ❓',
+    question: 'Berapakah hasil dari 1 + 1?',
+    options: ['1', '2', '3', '4'],
+    correctAnswer: 1,
+    correctMessage: 'Benar! Matematika dasar yang bagus! 🌟',
+    wrongMessage: 'Belum tepat. 1 + 1 adalah 2. 😊'
   },
   6: {
     type: 'question',
-    title: 'Pertanyaan Adab ❓',
-    question: 'Apa yang sebaiknya diucapkan saat bertemu guru?',
-    options: ['Diam saja', 'Salam dengan sopan', 'Berteriak', 'Bercanda berlebihan'],
+    title: 'Kuis Matematika ❓',
+    question: 'Berapakah hasil dari 3 + 3?',
+    options: ['5', '6', '7', '8'],
     correctAnswer: 1,
-    correctMessage: 'MasyaAllah, benar! Mengucapkan salam adalah adab yang sangat mulia. Tetap semangat!',
-    wrongMessage: 'Belum tepat. Yuk ingat, saat bertemu guru sebaiknya mengucapkan salam dengan sopan. 😊'
+    correctMessage: 'Luar biasa, jawabanmu tepat! 🌟',
+    wrongMessage: 'Belum tepat. 3 + 3 adalah 6. 😊'
+  },
+  7: {
+    type: 'question',
+    title: 'Kuis Pengetahuan Islam ❓',
+    question: 'Berapa jumlah ayat dalam Surat Al-Fatihah?',
+    options: ['5 ayat', '6 ayat', '7 ayat', '8 ayat'],
+    correctAnswer: 2,
+    correctMessage: 'MasyaAllah, benar sekali! Surat Al-Fatihah terdiri dari 7 ayat. 🌟',
+    wrongMessage: 'Belum tepat. Surat Al-Fatihah memiliki 7 ayat. 😊'
   },
   8: {
-    type: 'snake',
-    to: 4,
-    title: 'Sikap Kurang Baik 🐍',
-    message: 'Kamu memotong pembicaraan guru. Adab mengajarkan kita untuk sabar menunggu. Turun ke kotak 4.'
-  },
-  11: {
-    type: 'ladder',
-    to: 16,
-    title: 'Adab Baik 🪜',
-    message: 'Kamu mendengarkan nasihat guru dengan penuh perhatian dan sopan santun. Luar biasa! Naik ke kotak 16!'
-  },
-  14: {
     type: 'question',
-    title: 'Pertanyaan Adab ❓',
-    question: 'Bagaimana sikap yang baik saat dinasihati orang tua?',
-    options: ['Mendengarkan dengan sopan', 'Membantah dengan keras', 'Pergi begitu saja', 'Menutup telinga'],
-    correctAnswer: 0,
-    correctMessage: 'Tepat sekali! Mendengarkan nasihat orang tua dengan sopan adalah akhlak yang terpuji. 🌟',
-    wrongMessage: 'Belum tepat. Sikap yang baik adalah mendengarkan nasihat orang tua dengan penuh rasa hormat. 😊'
-  },
-  17: {
-    type: 'snake',
-    to: 9,
-    title: 'Sikap Kurang Baik 🐍',
-    message: 'Kamu berbicara kasar kepada orang yang lebih tua. Adab mengajarkan kita bertutur lembut. Turun ke kotak 9.'
-  },
-  19: {
-    type: 'ladder',
-    to: 24,
-    title: 'Adab Baik 🪜',
-    message: 'Kamu membantu orang tua tanpa diminta. Subhanallah, itulah bakti anak yang sholeh! Naik ke kotak 24!'
-  },
-  22: {
-    type: 'question',
-    title: 'Pertanyaan Adab ❓',
-    question: 'Apa contoh adab yang benar kepada orang yang lebih tua?',
-    options: ['Berkata kasar', 'Mengejek di depan umum', 'Berbicara dengan sopan', 'Tidak peduli sama sekali'],
-    correctAnswer: 2,
-    correctMessage: 'Benar sekali! Berbicara sopan adalah salah satu bentuk adab mulia kepada orang yang lebih tua. ✨',
-    wrongMessage: 'Belum tepat. Salah satu adab kepada orang yang lebih tua adalah berbicara dengan sopan dan penuh hormat. 😊'
-  },
-  25: {
-    type: 'snake',
-    to: 18,
-    title: 'Sikap Kurang Baik 🐍',
-    message: 'Kamu tidak mengucapkan salam saat masuk rumah. Salam adalah doa dan tanda adab. Turun ke kotak 18.'
-  },
-  27: {
-    type: 'ladder',
-    to: 29,
-    title: 'Adab Baik 🪜',
-    message: 'Kamu meminta izin sebelum menggunakan barang milik orang lain. Masya Allah, adabmu luar biasa! Naik ke kotak 29!'
-  },
-  // Extra events
-  13: {
-    type: 'snake',
-    to: 7,
-    title: 'Sikap Kurang Baik 🐍',
-    message: 'Kamu mengejek nasihat orang yang lebih tua. Nasihat adalah hadiah, hargailah! Turun ke kotak 7.'
-  },
-  20: {
-    type: 'question',
-    title: 'Pertanyaan Adab ❓',
-    question: 'Apa yang harus dilakukan ketika masuk rumah?',
-    options: ['Langsung masuk tanpa bilang apa-apa', 'Mengucapkan salam', 'Langsung ke kamar', 'Membunyikan klakson'],
+    title: 'Tebak Hewan ❓',
+    question: 'Hewan apa yang digambarkan pada kotak 8?',
+    options: ['Kambing', 'Kuda', 'Sapi', 'Unta'],
     correctAnswer: 1,
-    correctMessage: 'Benar! Mengucapkan salam saat masuk rumah adalah sunnah Nabi. Allahumma barik! 🌟',
-    wrongMessage: 'Belum tepat. Yang benar adalah mengucapkan salam ketika masuk rumah. Yuk diingat ya! 😊'
+    correctMessage: 'Benar, itu adalah gambar Kuda! 🐴',
+    wrongMessage: 'Kurang tepat. Itu adalah gambar Kuda. 😊'
+  },
+  18: {
+    type: 'question',
+    title: 'Pertanyaan Adab ❓',
+    question: 'Bagaimana cara kita menjawab jika ditanya umur atau kabar oleh orang tua?',
+    options: ['Menjawab dengan sopan dan senyuman', 'Berdiam diri saja', 'Menjawab dengan ketus', 'Berteriak keras'],
+    correctAnswer: 0,
+    correctMessage: 'Tepat! Menjawab orang tua harus selalu sopan dan ramah. 🌟',
+    wrongMessage: 'Belum tepat. Kita harus menjawab dengan sopan dan penuh kelembutan. 😊'
+  },
+  23: {
+    type: 'question',
+    title: 'Kuis Perkalian ❓',
+    question: 'Berapakah hasil dari 4 x 6?',
+    options: ['20', '22', '24', '26'],
+    correctAnswer: 2,
+    correctMessage: 'Hebat, 4 x 6 adalah 24! 🌟',
+    wrongMessage: 'Belum tepat. 4 x 6 adalah 24. 😊'
+  },
+  29: {
+    type: 'question',
+    title: 'Kuis Pembagian ❓',
+    question: 'Berapakah hasil dari 60 : 2?',
+    options: ['20', '25', '30', '35'],
+    correctAnswer: 2,
+    correctMessage: 'Tepat sekali! 60 dibagi 2 adalah 30. 🌟',
+    wrongMessage: 'Belum tepat. 60 : 2 adalah 30. 😊'
+  },
+  32: {
+    type: 'question',
+    title: 'Kuis Agama Islam ❓',
+    question: 'Siapakah nama nabi pertama yang diciptakan oleh Allah SWT?',
+    options: ['Nabi Muhammad SAW', 'Nabi Ibrahim AS', 'Nabi Adam AS', 'Nabi Isa AS'],
+    correctAnswer: 2,
+    correctMessage: 'MasyaAllah, benar! Nabi pertama adalah Nabi Adam AS. 🌟',
+    wrongMessage: 'Belum tepat. Nabi pertama adalah Nabi Adam AS. 😊'
+  },
+  42: {
+    type: 'question',
+    title: 'Kuis Agama Islam ❓',
+    question: 'Ada berapakah jumlah Rukun Islam?',
+    options: ['3 rukun', '4 rukun', '5 rukun', '6 rukun'],
+    correctAnswer: 2,
+    correctMessage: 'Benar sekali! Rukun Islam ada 5 rukun. 🌟',
+    wrongMessage: 'Belum tepat. Rukun Islam terdiri dari 5 perkara. 😊'
+  },
+  44: {
+    type: 'question',
+    title: 'Kuis Perkalian ❓',
+    question: 'Berapakah hasil dari 6 x 6?',
+    options: ['30', '32', '36', '40'],
+    correctAnswer: 2,
+    correctMessage: 'Tepat sekali! 6 x 6 = 36. 🌟',
+    wrongMessage: 'Belum tepat. 6 x 6 adalah 36. 😊'
+  },
+  59: {
+    type: 'question',
+    title: 'Kuis Perkalian ❓',
+    question: 'Berapakah hasil dari 7 x 6?',
+    options: ['40', '42', '44', '46'],
+    correctAnswer: 1,
+    correctMessage: 'Tepat sekali, 7 x 6 adalah 42! 🌟',
+    wrongMessage: 'Belum tepat. 7 x 6 adalah 42. 😊'
+  },
+  63: {
+    type: 'question',
+    title: 'Kuis Perkalian ❓',
+    question: 'Berapakah hasil dari 9 x 7?',
+    options: ['56', '63', '70', '72'],
+    correctAnswer: 1,
+    correctMessage: 'Benar! 9 x 7 adalah 63. 🌟',
+    wrongMessage: 'Belum tepat. 9 x 7 adalah 63. 😊'
+  },
+  70: {
+    type: 'question',
+    title: 'Kuis Agama Islam ❓',
+    question: 'Sebutkan nama 2 Malaikat Allah yang wajib kita ketahui!',
+    options: ['Jibril dan Mikail', 'Munkar dan Nakir', 'Raqib dan Atid', 'Semua jawaban benar'],
+    correctAnswer: 3,
+    correctMessage: 'Luar biasa, benar! Ketiganya adalah malaikat Allah yang wajib kita ketahui. 🌟',
+    wrongMessage: 'Kurang tepat. Semua pilihan di atas adalah malaikat Allah yang wajib diketahui. 😊'
+  },
+  78: {
+    type: 'question',
+    title: 'Kuis Perkalian ❓',
+    question: 'Berapakah hasil dari 7 x 11?',
+    options: ['70', '77', '84', '88'],
+    correctAnswer: 1,
+    correctMessage: 'Hebat, perkalianmu luar biasa! 🌟',
+    wrongMessage: 'Belum tepat. 7 x 11 adalah 77. 😊'
+  },
+  80: {
+    type: 'question',
+    title: 'Kuis Pembagian ❓',
+    question: 'Berapakah hasil dari 120 : 2?',
+    options: ['50', '60', '70', '80'],
+    correctAnswer: 1,
+    correctMessage: 'Benar sekali! 120 : 2 = 60. 🌟',
+    wrongMessage: 'Belum tepat. 120 : 2 adalah 60. 😊'
+  },
+  81: {
+    type: 'question',
+    title: 'Kuis Pembagian ❓',
+    question: 'Berapakah hasil dari 160 : 2?',
+    options: ['70', '80', '90', '100'],
+    correctAnswer: 1,
+    correctMessage: 'Hebat! 160 : 2 = 80. 🌟',
+    wrongMessage: 'Belum tepat. 160 : 2 adalah 80. 😊'
+  },
+  98: {
+    type: 'question',
+    title: 'Kuis Agama Islam ❓',
+    question: 'Sebagai umat Islam, kita adalah umat dari Nabi siapa?',
+    options: ['Nabi Musa AS', 'Nabi Ibrahim AS', 'Nabi Muhammad SAW', 'Nabi Isa AS'],
+    correctAnswer: 2,
+    correctMessage: 'MasyaAllah, benar! Kita adalah umat Nabi Muhammad SAW. 🌟',
+    wrongMessage: 'Belum tepat. Kita adalah umat kekasih Allah, Nabi Muhammad SAW. 😊'
   }
 };
 
@@ -115,7 +259,8 @@ const gameScreen      = () => document.getElementById('gameScreen');
 const board           = () => document.getElementById('board');
 const playerInfo      = () => document.getElementById('playerInfo');
 const turnIndicator   = () => document.getElementById('turnIndicator');
-const diceDisplay     = () => document.getElementById('diceDisplay');
+const diceImg         = () => document.getElementById('diceImg');
+const diceNumber      = () => document.getElementById('diceNumber');
 const diceResult      = () => document.getElementById('diceResult');
 const rollDiceBtn     = () => document.getElementById('rollDiceBtn');
 const messageText     = () => document.getElementById('messageText');
@@ -265,14 +410,14 @@ function buildGrid() {
 
 function getTileType(num, event) {
   if (num === 1)  return 'start';
-  if (num === 30) return 'finish';
+  if (num === 100) return 'finish';
   if (!event)     return 'normal';
   return event.type;
 }
 
 function getTileIcon(num, event) {
   if (num === 1)  return '🚀';
-  if (num === 30) return '🏆';
+  if (num === 100) return '🏆';
   if (!event)     return '';
   if (event.type === 'ladder')   return '🪜';
   if (event.type === 'snake')    return '🐍';
@@ -293,20 +438,22 @@ function rollDice() {
   btn.disabled = true;
 
   // Animate dice
-  const dice = diceDisplay();
-  dice.classList.add('rolling');
+  const img = diceImg();
+  const numDiv = diceNumber();
+
+  img.classList.add('rolling');
+  numDiv.textContent = '?';
 
   let rolls = 0;
   const maxRolls = 10;
   const interval = setInterval(() => {
-    const tempFace = Math.floor(Math.random() * 6);
-    dice.textContent = DICE_FACES[tempFace];
+    numDiv.textContent = Math.floor(Math.random() * 6) + 1;
     rolls++;
     if (rolls >= maxRolls) {
       clearInterval(interval);
-      dice.classList.remove('rolling');
+      img.classList.remove('rolling');
       const result = Math.floor(Math.random() * 6) + 1;
-      dice.textContent = DICE_FACES[result - 1];
+      numDiv.textContent = result;
       diceResult().textContent = `🎲 Angka dadu: ${result}`;
       movePlayer(result);
     }
@@ -327,7 +474,7 @@ function movePlayer(steps) {
     // Bounce back
     const excess = newPos - TOTAL_TILES;
     newPos = TOTAL_TILES - excess;
-    showMessage(`${player.name} melempar ${steps}, tapi melampaui kotak 30! Mundur ${excess} langkah ke kotak ${newPos}.`);
+    showMessage(`${player.name} melempar ${steps}, tapi melampaui kotak ${TOTAL_TILES}! Mundur ${excess} langkah ke kotak ${newPos}.`);
   }
 
   // Animate pion moving
@@ -558,14 +705,13 @@ function renderPlayersOnBoard() {
     if (!container) return;
 
     const pion = document.createElement('div');
-    pion.className = 'sl-pion';
-    pion.style.background = p.color;
-    pion.textContent = i + 1;
+    pion.className = `sl-pion sl-pion-p${i + 1}`;
     pion.title = p.name;
     pion.style.animation = 'sl-pionMove 0.4s ease';
     container.appendChild(pion);
   });
 }
+
 
 /**
  * Show message in the message box.
@@ -634,7 +780,7 @@ function resetGame() {
   playerInfo().innerHTML = '';
 
   // Reset dice
-  diceDisplay().textContent = '🎲';
+  diceNumber().textContent = '';
   diceResult().textContent  = 'Tekan tombol untuk lempar dadu!';
   rollDiceBtn().disabled    = false;
 

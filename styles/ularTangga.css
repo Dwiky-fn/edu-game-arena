@@ -316,22 +316,37 @@
 }
 
 /* Main Layout */
-.sl-main-layout {
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 24px 16px 32px;
+.sl-game-layout {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 24px;
-  align-items: start;
-  flex: 1;
+  grid-template-columns: 1fr 4fr; /* 1/5 sidebar and 4/5 board */
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 /* Sidebar */
 .sl-sidebar {
+  grid-column: 1;
+  background: rgba(26, 26, 46, 0.95);
+  border-right: 1.5px solid rgba(255, 255, 255, 0.1);
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  height: 100%;
+  overflow-y: auto;
+  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.sl-board-area {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  height: 100%;
+  overflow: hidden;
 }
 
 /* Player Info Panel */
@@ -480,116 +495,92 @@
 }
 
 /* Board Grid */
+/* Board Grid */
+.sl-board-wrapper {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
 .sl-board {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: repeat(5, 1fr);
-  gap: 6px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 20px;
-  padding: 12px;
-  aspect-ratio: 6/5;
-  max-height: 520px;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  gap: 0;
+  background-image: url('../assets/ular-tangga/bg-game.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  aspect-ratio: 1 / 1;
+  max-width: 80vh;
+  max-height: 80vh;
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
+  padding: 0;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  border: 4px solid #f6c90e;
+  position: relative;
+  box-sizing: border-box;
 }
 
 /* Tile */
 .sl-tile {
-  border-radius: 10px;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 6px 4px;
-  cursor: default;
+  justify-content: center;
   position: relative;
-  border: 1.5px solid transparent;
-  transition: transform 0.15s, box-shadow 0.15s;
-  min-height: 0;
+  box-sizing: border-box;
+  aspect-ratio: 1 / 1;
+  transition: transform 0.15s;
 }
 
 .sl-tile:hover {
-  transform: scale(1.04);
-  z-index: 2;
+  transform: scale(1.05);
+  z-index: 5;
+  background: rgba(246, 201, 14, 0.08) !important;
 }
 
-.sl-tile-num {
-  font-size: 0.7rem;
-  font-weight: 800;
-  opacity: 0.7;
-  line-height: 1;
-}
-
+.sl-tile-num,
 .sl-tile-icon {
-  font-size: 1.1rem;
-  line-height: 1;
+  display: none !important; /* hidden because they are printed on the bg-game image */
 }
 
 .sl-tile-players {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 2px;
-  justify-content: center;
-  min-height: 18px;
-}
-
-/* Tile types */
-.sl-tile-normal {
-  background: rgba(255,255,255,0.06);
-  border-color: rgba(255,255,255,0.08);
-}
-
-.sl-tile-ladder {
-  background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(16,185,129,0.15));
-  border-color: rgba(34,197,94,0.4);
-  box-shadow: 0 0 10px rgba(34,197,94,0.15);
-}
-
-.sl-tile-snake {
-  background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(220,38,38,0.15));
-  border-color: rgba(239,68,68,0.4);
-  box-shadow: 0 0 10px rgba(239,68,68,0.15);
-}
-
-.sl-tile-question {
-  background: linear-gradient(135deg, rgba(234,179,8,0.2), rgba(249,115,22,0.15));
-  border-color: rgba(234,179,8,0.4);
-  box-shadow: 0 0 10px rgba(234,179,8,0.15);
-}
-
-/* Special tiles: start & finish */
-.sl-tile-start {
-  background: linear-gradient(135deg, rgba(99,102,241,0.3), rgba(79,70,229,0.2));
-  border-color: rgba(99,102,241,0.5);
-}
-
-.sl-tile-finish {
-  background: linear-gradient(135deg, rgba(246,201,14,0.4), rgba(249,115,22,0.3));
-  border-color: rgba(246,201,14,0.7);
-  box-shadow: 0 0 20px rgba(246,201,14,0.3);
-  animation: sl-finishPulse 2s infinite;
-}
-
-/* Tile active highlight */
-.sl-tile.just-landed {
-  animation: sl-landPulse 0.6s ease;
-}
-
-/* Player Pion */
-.sl-pion {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 900;
-  font-size: 0.6rem;
-  color: #1a1a2e;
-  border: 2px solid rgba(255,255,255,0.4);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-  transition: all 0.3s ease;
+  gap: 2px;
+  padding: 4px;
 }
+
+/* Player Pion - custom tokens */
+.sl-pion {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: inline-block;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.sl-pion-p1 { background-image: url('../assets/ular-tangga/token-p1.png'); }
+.sl-pion-p2 { background-image: url('../assets/ular-tangga/token-p2.png'); }
+.sl-pion-p3 { background-image: url('../assets/ular-tangga/token-p3.png'); }
+.sl-pion-p4 { background-image: url('../assets/ular-tangga/token-p4.png'); }
+
 
 /* Legend */
 .sl-legend {
@@ -962,3 +953,84 @@
     flex-direction: column;
   }
 }
+
+/* Mascot Sizing */
+.sl-setup-mascot {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.25));
+}
+
+.sl-sidebar-mascot {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.2));
+}
+
+.sl-win-mascot {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  animation: sl-bounce 2s infinite;
+  filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3));
+}
+
+/* Dice Sizing & Number Overlay */
+.sl-dice-wrap {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  margin: 10px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sl-dice-img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  transition: transform 0.15s;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+}
+
+.sl-dice-img.rolling {
+  animation: sl-diceRoll 0.6s ease infinite;
+}
+
+.sl-dice-number {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ffffff;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.9), 2px 2px 0px #000;
+  background: rgba(0, 0, 0, 0.65);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2.5px solid #f6c90e;
+  pointer-events: none;
+}
+
+/* Legend and Modal image scaling */
+.sl-legend-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.sl-modal-header-img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  margin-bottom: 15px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+

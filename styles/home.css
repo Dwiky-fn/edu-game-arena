@@ -101,6 +101,18 @@ h1 {
 .game-icon {
   font-size: 4em;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
+}
+
+.game-icon img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 12px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
 }
 
 .game-title {
