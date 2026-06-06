@@ -247,6 +247,64 @@ const boardEvents = {
   }
 };
 
+const tilePalette = [
+  '#fff3a3', '#a7e8ff', '#b9f6b0', '#ffb4a8', '#ffd08a',
+  '#d7bcff', '#ffb3d9', '#b8f7e4', '#ffe28a', '#a8d8ff',
+  '#c9f28d', '#ffcfdf'
+];
+
+const tilePrompts = [
+  { label: 'Senyum sopan', icon: '&#128522;' },
+  { label: 'Ucap salam', icon: '&#128075;' },
+  { label: 'Baca doa', icon: '&#129330;' },
+  { label: 'Dengar guru', icon: '&#128066;' },
+  { label: 'Bantu teman', icon: '&#129309;' },
+  { label: 'Rapikan buku', icon: '&#128214;' },
+  { label: 'Izin dahulu', icon: '&#9757;' },
+  { label: 'Terima kasih', icon: '&#11088;' },
+  { label: 'Jaga lisan', icon: '&#128483;' },
+  { label: 'Antri rapi', icon: '&#128694;' }
+];
+
+const tileText = {
+  1: { label: 'Start Basmalah', icon: '&#127939;' },
+  2: { label: '1 + 1?', icon: '&#10067;' },
+  6: { label: '3 + 3?', icon: '&#10067;' },
+  7: { label: 'Al-Fatihah?', icon: '&#10067;' },
+  8: { label: 'Tebak hewan', icon: '&#10067;' },
+  12: { label: 'Cium tangan', icon: '&#129309;' },
+  16: { label: 'Minta izin', icon: '&#9757;' },
+  18: { label: 'Jawab sopan', icon: '&#10067;' },
+  20: { label: 'Naik ke 50', icon: '&#129692;' },
+  21: { label: 'Naik ke 79', icon: '&#129692;' },
+  22: { label: 'Turun ke 17', icon: '&#128013;' },
+  23: { label: '4 x 6?', icon: '&#10067;' },
+  29: { label: '60 : 2?', icon: '&#10067;' },
+  32: { label: 'Nabi pertama?', icon: '&#10067;' },
+  35: { label: 'Naik ke 95', icon: '&#129692;' },
+  38: { label: 'Bantu ibu', icon: '&#127968;' },
+  42: { label: 'Rukun Islam?', icon: '&#10067;' },
+  44: { label: '6 x 6?', icon: '&#10067;' },
+  50: { label: 'Adab baik', icon: '&#11088;' },
+  57: { label: 'Turun ke 43', icon: '&#128013;' },
+  59: { label: '7 x 6?', icon: '&#10067;' },
+  62: { label: 'Naik ke 82', icon: '&#129692;' },
+  63: { label: '9 x 7?', icon: '&#10067;' },
+  66: { label: 'Naik ke 95', icon: '&#129692;' },
+  69: { label: 'Naik ke 89', icon: '&#129692;' },
+  70: { label: 'Nama malaikat?', icon: '&#10067;' },
+  75: { label: 'Turun ke 68', icon: '&#128013;' },
+  78: { label: '7 x 11?', icon: '&#10067;' },
+  80: { label: '120 : 2?', icon: '&#10067;' },
+  81: { label: '160 : 2?', icon: '&#10067;' },
+  84: { label: 'Turun ke 78', icon: '&#128013;' },
+  90: { label: 'Naik ke 91', icon: '&#129692;' },
+  92: { label: 'Turun ke 73', icon: '&#128013;' },
+  95: { label: 'Bintang adab', icon: '&#11088;' },
+  98: { label: 'Umat nabi?', icon: '&#10067;' },
+  100: { label: 'Finish Selesai', icon: '&#127942;' }
+};
+
 // ─── Game State ────────────────────────────────────────────────
 let players = [];
 let currentPlayerIndex = 0;
@@ -346,38 +404,82 @@ function startGame() {
 // ─── Board ─────────────────────────────────────────────────────
 
 /**
- * Build the 30-tile board with zig-zag numbering.
+ * Build the 100-tile board with zig-zag numbering.
  */
 function createBoard() {
   const boardEl = board();
   boardEl.innerHTML = '';
 
-  // Build a 5x6 grid with zig-zag snake order
-  // Row 0 (bottom visual) = tiles 25-30, row 4 (top visual) = tiles 1-6
-  // We arrange visually: row index 0 is the TOP of the board
-  // Tile 30 = top-right, tile 1 = bottom-left
-  const grid = buildGrid(); // grid[row][col] = tile number (1..30), row 0 = top
+  const grid = buildGrid(); // grid[row][col] = tile number (1..100), row 0 = top
 
   for (let r = 0; r < ROWS; r++) {
     for (let c = 0; c < COLS; c++) {
       const num = grid[r][c];
       const event = boardEvents[num];
       const tileType = getTileType(num, event);
+      const content = getTileContent(num, event);
 
       const tile = document.createElement('div');
       tile.className = `sl-tile sl-tile-${tileType}`;
       tile.id = `tile-${num}`;
       tile.setAttribute('aria-label', `Kotak ${num}`);
+      tile.style.setProperty('--tile-bg', tilePalette[(num - 1) % tilePalette.length]);
 
       tile.innerHTML = `
         <span class="sl-tile-num">${num}</span>
-        <span class="sl-tile-icon">${getTileIcon(num, event)}</span>
+        <span class="sl-tile-icon">${content.icon}</span>
+        <span class="sl-tile-label">${content.label}</span>
         <div class="sl-tile-players" id="tile-players-${num}"></div>
       `;
 
       boardEl.appendChild(tile);
     }
   }
+
+  createBoardOverlays(boardEl);
+}
+
+function createBoardOverlays(boardEl) {
+  const overlay = document.createElement('div');
+  overlay.className = 'sl-board-overlays';
+
+  Object.entries(boardEvents).forEach(([from, event]) => {
+    if (!event || (event.type !== 'ladder' && event.type !== 'snake')) return;
+
+    const start = getTileCenter(Number(from));
+    const end = getTileCenter(event.to);
+    const dx = end.x - start.x;
+    const dy = end.y - start.y;
+    const distance = Math.sqrt((dx * dx) + (dy * dy));
+    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+    const midX = (start.x + end.x) / 2;
+    const midY = (start.y + end.y) / 2;
+
+    const art = document.createElement('img');
+    art.className = `sl-board-art sl-board-art-${event.type}`;
+    art.src = event.type === 'ladder' ? 'assets/ular-tangga/ladder.png' : 'assets/ular-tangga/snake.png';
+    art.alt = event.type === 'ladder' ? 'Tangga' : 'Ular';
+    art.style.left = `${midX}%`;
+    art.style.top = `${midY}%`;
+    art.style.width = `${distance}%`;
+    art.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
+    overlay.appendChild(art);
+  });
+
+  boardEl.appendChild(overlay);
+}
+
+function getTileCenter(num) {
+  const rowFromBottom = Math.floor((num - 1) / COLS);
+  const indexInRow = (num - 1) % COLS;
+  const leftToRight = rowFromBottom % 2 === 0;
+  const col = leftToRight ? indexInRow : COLS - 1 - indexInRow;
+  const row = ROWS - 1 - rowFromBottom;
+
+  return {
+    x: ((col + 0.5) / COLS) * 100,
+    y: ((row + 0.5) / ROWS) * 100
+  };
 }
 
 /**
@@ -424,6 +526,14 @@ function getTileIcon(num, event) {
   if (event.type === 'snake') return '🐍';
   if (event.type === 'question') return '❓';
   return '';
+}
+
+function getTileContent(num, event) {
+  if (tileText[num]) return tileText[num];
+  if (event && event.type === 'question') return { label: 'Pertanyaan', icon: '&#10067;' };
+  if (event && event.type === 'ladder') return { label: `Naik ke ${event.to}`, icon: '&#129692;' };
+  if (event && event.type === 'snake') return { label: `Turun ke ${event.to}`, icon: '&#128013;' };
+  return tilePrompts[(num - 1) % tilePrompts.length];
 }
 
 // ─── Dice ──────────────────────────────────────────────────────

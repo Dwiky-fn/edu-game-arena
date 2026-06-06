@@ -15,8 +15,12 @@
 .snake-ladder-page {
   font-family: 'Nunito', 'Segoe UI', Tahoma, sans-serif;
   min-height: 100vh;
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
-  color: #e2e8f0;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.32) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.32) 1px, transparent 1px),
+    linear-gradient(135deg, #fff5bf 0%, #bff3ff 48%, #d8ffc0 100%);
+  background-size: 34px 34px, 34px 34px, auto;
+  color: #3a2816;
   overflow-x: hidden;
 }
 
@@ -64,15 +68,15 @@
 }
 
 .sl-btn-secondary {
-  background: rgba(255, 255, 255, 0.1);
-  color: #e2e8f0;
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  background: #fff;
+  color: #5c3512;
+  border: 2px solid #f3b54f;
 }
 
 .sl-btn-outline {
   background: transparent;
-  color: #f6c90e;
-  border: 2px solid #f6c90e;
+  color: #7a3f08;
+  border: 2px solid #f3a51e;
 }
 
 .sl-btn-outline-sm {
@@ -330,15 +334,15 @@
 /* Sidebar */
 .sl-sidebar {
   grid-column: 1;
-  background: rgba(26, 26, 46, 0.95);
-  border-right: 1.5px solid rgba(255, 255, 255, 0.1);
+  background: #fff8dd;
+  border-right: 5px solid #f3b54f;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 16px;
   height: 100%;
   overflow-y: auto;
-  box-shadow: 4px 0 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 6px 0 0 #d7862f, 14px 0 24px rgba(89, 54, 15, 0.18);
 }
 
 .sl-board-area {
@@ -350,13 +354,17 @@
   padding: 20px;
   height: 100%;
   overflow: hidden;
+  background:
+    radial-gradient(circle at 12% 12%, rgba(255, 222, 90, 0.42), transparent 18%),
+    radial-gradient(circle at 88% 18%, rgba(255, 139, 177, 0.32), transparent 18%),
+    radial-gradient(circle at 80% 88%, rgba(92, 211, 128, 0.3), transparent 20%);
 }
 
 /* Player Info Panel */
 .sl-player-info-panel {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
+  background: #fffdf2;
+  border: 2px solid #f3d47c;
+  border-radius: 12px;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -368,16 +376,16 @@
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background: #fff6c9;
+  border: 1.5px solid #efd47a;
   transition: all 0.3s;
 }
 
 .sl-player-card.active-turn {
-  border-color: #f6c90e;
-  background: rgba(246, 201, 14, 0.1);
-  box-shadow: 0 0 16px rgba(246, 201, 14, 0.2);
+  border-color: #f39b18;
+  background: #ffe58a;
+  box-shadow: 0 4px 0 #d7862f;
 }
 
 .sl-player-avatar {
@@ -408,7 +416,7 @@
 
 .sl-player-pos {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: #7a5a28;
 }
 
 .sl-player-turn-badge {
@@ -436,11 +444,11 @@
 .sl-turn-indicator {
   font-weight: 800;
   font-size: 0.95rem;
-  color: #f6c90e;
+  color: #5f3408;
   padding: 8px 16px;
-  background: rgba(246, 201, 14, 0.1);
-  border-radius: 50px;
-  border: 1px solid rgba(246, 201, 14, 0.3);
+  background: #ffe58a;
+  border-radius: 10px;
+  border: 2px solid #f3b54f;
 }
 
 .sl-dice-wrap {
@@ -462,19 +470,19 @@
 
 .sl-dice-result {
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: #6d4a1b;
   min-height: 20px;
 }
 
 /* Message Box */
 .sl-message-box {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  background: #e8fbff;
+  border: 2px solid #7ed1e8;
+  border-radius: 12px;
   padding: 14px 16px;
   font-size: 0.875rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.8);
+  color: #315269;
   min-height: 72px;
   display: flex;
   align-items: center;
@@ -505,55 +513,155 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
+  padding: 12px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.35) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px),
+    #fff7d6;
+  background-size: 26px 26px;
+  border: 6px solid #f8b84e;
+  border-radius: 18px;
+  box-shadow: 0 14px 0 #d7862f, 0 24px 34px rgba(77, 46, 12, 0.22);
 }
 
 .sl-board {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
-  gap: 0;
-  background-image: url('../assets/ular-tangga/bg-game.png');
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: center;
+  gap: 3px;
+  background: #4b3318;
   aspect-ratio: 1 / 1;
-  max-width: 80vh;
-  max-height: 80vh;
+  max-width: min(84vh, 100%);
+  max-height: min(84vh, 100%);
   width: 100%;
   height: 100%;
-  border-radius: 16px;
-  padding: 0;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-  border: 4px solid #f6c90e;
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: inset 0 0 0 4px #7a4a21;
+  border: 5px solid #fff2b8;
   position: relative;
   box-sizing: border-box;
 }
 
 /* Tile */
 .sl-tile {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.52), rgba(255, 255, 255, 0) 42%),
+    var(--tile-bg);
+  border: 2px solid rgba(101, 63, 22, 0.72);
+  box-shadow: inset 0 -3px 0 rgba(79, 45, 13, 0.14);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
   box-sizing: border-box;
   aspect-ratio: 1 / 1;
   transition: transform 0.15s;
+  overflow: hidden;
+  color: #3d2815;
+  text-align: center;
+  padding: 16% 5% 9%;
 }
 
 .sl-tile:hover {
   transform: scale(1.05);
-  z-index: 5;
-  background: rgba(246, 201, 14, 0.08) !important;
+  z-index: 30;
+  box-shadow: 0 5px 12px rgba(79, 45, 13, 0.24), inset 0 -3px 0 rgba(79, 45, 13, 0.14);
 }
 
-.sl-tile-num,
+.sl-tile-num {
+  position: absolute;
+  top: 3px;
+  left: 4px;
+  min-width: 18px;
+  padding: 1px 4px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(89, 54, 15, 0.22);
+  color: #2c1d10;
+  font-size: clamp(0.5rem, 0.85vw, 0.72rem);
+  font-weight: 900;
+  line-height: 1;
+  z-index: 6;
+}
+
 .sl-tile-icon {
-  display: none !important;
-  /* hidden because they are printed on the bg-game image */
+  display: block;
+  font-size: clamp(0.72rem, 1.15vw, 1.1rem);
+  line-height: 1;
+  margin-bottom: 2px;
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, 0.5));
+  z-index: 5;
+}
+
+.sl-tile-label {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  max-width: 100%;
+  font-size: clamp(0.44rem, 0.72vw, 0.66rem);
+  font-weight: 900;
+  line-height: 1.02;
+  z-index: 5;
+  text-wrap: balance;
+}
+
+.sl-tile-start,
+.sl-tile-finish {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.72), transparent 32%),
+    linear-gradient(145deg, #fff06a, #ff9d3d);
+  border-color: #8d4e13;
+}
+
+.sl-tile-start .sl-tile-label,
+.sl-tile-finish .sl-tile-label {
+  font-size: clamp(0.5rem, 0.82vw, 0.74rem);
+  color: #4a270b;
+}
+
+.sl-tile-question {
+  outline: 2px dashed rgba(87, 54, 9, 0.38);
+  outline-offset: -6px;
+}
+
+.sl-tile-ladder {
+  box-shadow: inset 0 0 0 4px rgba(35, 140, 65, 0.2), inset 0 -3px 0 rgba(79, 45, 13, 0.14);
+}
+
+.sl-tile-snake {
+  box-shadow: inset 0 0 0 4px rgba(209, 65, 65, 0.2), inset 0 -3px 0 rgba(79, 45, 13, 0.14);
+}
+
+.sl-board-overlays {
+  position: absolute;
+  inset: 5px;
+  z-index: 14;
+  pointer-events: none;
+}
+
+.sl-board-art {
+  position: absolute;
+  height: clamp(36px, 6.5vw, 72px);
+  max-width: none;
+  object-fit: fill;
+  transform-origin: 50% 50%;
+  filter: drop-shadow(0 4px 4px rgba(55, 31, 9, 0.25));
+  pointer-events: none;
+}
+
+.sl-board-art-ladder {
+  z-index: 12;
+  opacity: 0.9;
+  height: clamp(28px, 4.5vw, 54px);
+}
+
+.sl-board-art-snake {
+  z-index: 13;
+  opacity: 0.92;
 }
 
 .sl-tile-players {
@@ -563,21 +671,25 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  padding: 4px;
+  gap: 3px;
+  padding: 20% 5% 5%;
+  z-index: 24;
+  pointer-events: none;
 }
 
 /* Player Pion - custom tokens */
 .sl-pion {
-  width: 28px;
-  height: 28px;
+  width: clamp(18px, 2.25vw, 30px);
+  height: clamp(18px, 2.25vw, 30px);
   border-radius: 50%;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   display: inline-block;
   transition: all 0.3s ease;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 3px 4px rgba(31, 20, 8, 0.55));
+  background-color: #fff;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px #2d1c0d;
 }
 
 .sl-pion-p1 {
@@ -603,10 +715,11 @@
   flex-wrap: wrap;
   gap: 12px;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
+  background: #fff8dd;
+  border: 2px solid #f3b54f;
+  border-radius: 10px;
   padding: 12px 16px;
+  box-shadow: 0 4px 0 #d7862f;
 }
 
 .sl-legend-item {
@@ -614,7 +727,8 @@
   align-items: center;
   gap: 6px;
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: #5c3512;
+  font-weight: 800;
 }
 
 .sl-legend-icon {
@@ -1009,7 +1123,7 @@
   }
 
   .sl-board {
-    aspect-ratio: 6/5;
+    aspect-ratio: 1 / 1;
     max-height: 420px;
   }
 
@@ -1044,7 +1158,7 @@
   .sl-board {
     max-height: 340px;
     gap: 3px;
-    padding: 8px;
+    padding: 5px;
   }
 
   .sl-tile-num {
@@ -1052,7 +1166,11 @@
   }
 
   .sl-tile-icon {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+  }
+
+  .sl-tile-label {
+    font-size: 0.42rem;
   }
 
   .sl-win-actions {
