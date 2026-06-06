@@ -508,6 +508,7 @@
 /* Board Grid */
 /* Board Grid */
 .sl-board-wrapper {
+  position: relative;
   width: 100%;
   height: 90%;
   display: flex;
@@ -515,14 +516,14 @@
   justify-content: center;
   overflow: visible;
   padding: 12px;
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.35) 1px, transparent 1px),
-    linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px),
-    #fff7d6;
-  background-size: 26px 26px;
+  background: #fff7d6;
   border: 6px solid #f8b84e;
   border-radius: 18px;
   box-shadow: 0 14px 0 #d7862f, 0 24px 34px rgba(77, 46, 12, 0.22);
+}
+
+.board-wrapper {
+  position: relative;
 }
 
 .sl-board {
@@ -607,6 +608,9 @@
   line-height: 1.02;
   z-index: 5;
   text-wrap: balance;
+  border-radius: 4px;
+  padding: 1px 2px;
+  background: rgba(255, 255, 255, 0.38);
 }
 
 .sl-tile-start,
@@ -636,32 +640,85 @@
   box-shadow: inset 0 0 0 4px rgba(209, 65, 65, 0.2), inset 0 -3px 0 rgba(79, 45, 13, 0.14);
 }
 
-.sl-board-overlays {
+.snake-ladder-layer {
   position: absolute;
-  inset: 5px;
+  inset: 0;
   z-index: 14;
   pointer-events: none;
 }
 
-.sl-board-art {
+.sl-connector {
   position: absolute;
-  height: clamp(36px, 6.5vw, 72px);
-  max-width: none;
+  transform-origin: left center;
   object-fit: fill;
-  transform-origin: 50% 50%;
-  filter: drop-shadow(0 4px 4px rgba(55, 31, 9, 0.25));
+  overflow: visible;
   pointer-events: none;
+  opacity: 0.88;
+  filter: drop-shadow(0 3px 3px rgba(55, 31, 9, 0.26));
 }
 
-.sl-board-art-ladder {
-  z-index: 12;
-  opacity: 0.9;
-  height: clamp(28px, 4.5vw, 54px);
+.sl-connector svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 
-.sl-board-art-snake {
-  z-index: 13;
-  opacity: 0.92;
+.sl-connector-ladder {
+  height: clamp(24px, 5vw, 54px);
+}
+
+.sl-ladder-rail,
+.sl-ladder-rung {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sl-ladder-rail {
+  stroke: #8b5a22;
+  stroke-width: 4.5;
+}
+
+.sl-ladder-rung {
+  stroke: #d99735;
+  stroke-width: 4;
+}
+
+.sl-connector-snake {
+  height: clamp(30px, 6vw, 64px);
+}
+
+.sl-snake-body {
+  fill: none;
+  stroke: #31a853;
+  stroke-width: 13;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sl-snake-alt .sl-snake-body {
+  stroke: #24a5b8;
+}
+
+.sl-snake-head {
+  fill: #31a853;
+}
+
+.sl-snake-alt .sl-snake-head {
+  fill: #24a5b8;
+}
+
+.sl-snake-eye {
+  fill: #23180b;
+}
+
+.sl-snake-tongue {
+  fill: none;
+  stroke: #ef4444;
+  stroke-width: 1.5;
+  stroke-linecap: round;
 }
 
 .sl-tile-players {

@@ -247,6 +247,21 @@ const boardEvents = {
   }
 };
 
+const connectors = [
+  { type: 'ladder', from: 20, to: 50 },
+  { type: 'ladder', from: 21, to: 79 },
+  { type: 'ladder', from: 35, to: 95 },
+  { type: 'ladder', from: 62, to: 82 },
+  { type: 'ladder', from: 66, to: 95 },
+  { type: 'ladder', from: 69, to: 89 },
+  { type: 'ladder', from: 90, to: 91 },
+  { type: 'snake', from: 22, to: 17 },
+  { type: 'snake', from: 57, to: 43 },
+  { type: 'snake', from: 75, to: 68 },
+  { type: 'snake', from: 84, to: 78 },
+  { type: 'snake', from: 92, to: 73 }
+];
+
 const tilePalette = [
   '#fff3a3', '#a7e8ff', '#b9f6b0', '#ffb4a8', '#ffd08a',
   '#d7bcff', '#ffb3d9', '#b8f7e4', '#ffe28a', '#a8d8ff',
@@ -423,6 +438,7 @@ function createBoard() {
       tile.className = `sl-tile sl-tile-${tileType}`;
       tile.id = `tile-${num}`;
       tile.setAttribute('aria-label', `Kotak ${num}`);
+      tile.dataset.tile = num;
       tile.style.setProperty('--tile-bg', tilePalette[(num - 1) % tilePalette.length]);
 
       tile.innerHTML = `
@@ -436,50 +452,86 @@ function createBoard() {
     }
   }
 
-  createBoardOverlays(boardEl);
-}
-
-function createBoardOverlays(boardEl) {
-  const overlay = document.createElement('div');
-  overlay.className = 'sl-board-overlays';
-
-  Object.entries(boardEvents).forEach(([from, event]) => {
-    if (!event || (event.type !== 'ladder' && event.type !== 'snake')) return;
-
-    const start = getTileCenter(Number(from));
-    const end = getTileCenter(event.to);
-    const dx = end.x - start.x;
-    const dy = end.y - start.y;
-    const distance = Math.sqrt((dx * dx) + (dy * dy));
-    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-    const midX = (start.x + end.x) / 2;
-    const midY = (start.y + end.y) / 2;
-
-    const art = document.createElement('img');
-    art.className = `sl-board-art sl-board-art-${event.type}`;
-    art.src = event.type === 'ladder' ? 'assets/ular-tangga/ladder.png' : 'assets/ular-tangga/snake.png';
-    art.alt = event.type === 'ladder' ? 'Tangga' : 'Ular';
-    art.style.left = `${midX}%`;
-    art.style.top = `${midY}%`;
-    art.style.width = `${distance}%`;
-    art.style.transform = `translate(-50%, -50%) rotate(${angle}deg)`;
-    overlay.appendChild(art);
-  });
-
-  boardEl.appendChild(overlay);
+  renderConnectors();
 }
 
 function getTileCenter(num) {
-  const rowFromBottom = Math.floor((num - 1) / COLS);
-  const indexInRow = (num - 1) % COLS;
-  const leftToRight = rowFromBottom % 2 === 0;
-  const col = leftToRight ? indexInRow : COLS - 1 - indexInRow;
-  const row = ROWS - 1 - rowFromBottom;
+  const boardEl = board();
+  const tile = boardEl.querySelector(`[data-tile="${num}"]`);
+  if (!tile) return null;
+
+  const boardRect = boardEl.getBoundingClientRect();
+  const tileRect = tile.getBoundingClientRect();
 
   return {
-    x: ((col + 0.5) / COLS) * 100,
-    y: ((row + 0.5) / ROWS) * 100
+    x: tileRect.left - boardRect.left + tileRect.width / 2,
+    y: tileRect.top - boardRect.top + tileRect.height / 2,
+    tileSize: Math.min(tileRect.width, tileRect.height)
   };
+}
+
+function renderConnector(connector) {
+  const start = getTileCenter(connector.from);
+  const end = getTileCenter(connector.to);
+  if (!start || !end) return null;
+
+  const dx = end.x - start.x;
+  const dy = end.y - start.y;
+  const length = Math.sqrt(dx * dx + dy * dy);
+  const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+  const thickness = Math.max(22, Math.min(start.tileSize * 0.82, 64));
+
+  const element = document.createElement('div');
+  element.className = `sl-connector sl-connector-${connector.type}`;
+  element.style.width = `${length}px`;
+  element.style.height = `${thickness}px`;
+  element.style.left = `${start.x}px`;
+  element.style.top = `${start.y}px`;
+  element.style.transform = `translateY(-50%) rotate(${angle}deg)`;
+  element.innerHTML = connector.type === 'ladder'
+    ? getLadderSvg()
+    : getSnakeSvg(connector.from);
+
+  return element;
+}
+
+function renderConnectors() {
+  const boardEl = board();
+  if (!boardEl) return;
+
+  let layer = boardEl.querySelector('.snake-ladder-layer');
+  if (!layer) {
+    layer = document.createElement('div');
+    layer.className = 'snake-ladder-layer';
+    boardEl.appendChild(layer);
+  }
+
+  layer.innerHTML = '';
+  connectors.forEach(connector => {
+    const element = renderConnector(connector);
+    if (element) layer.appendChild(element);
+  });
+}
+
+function getLadderSvg() {
+  return `
+    <svg viewBox="0 0 120 28" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M6 5 L114 5 M6 23 L114 23" class="sl-ladder-rail" />
+      <path d="M17 5 L17 23 M31 5 L31 23 M45 5 L45 23 M59 5 L59 23 M73 5 L73 23 M87 5 L87 23 M101 5 L101 23" class="sl-ladder-rung" />
+    </svg>
+  `;
+}
+
+function getSnakeSvg(seed) {
+  const hueShift = seed % 2 === 0 ? 'sl-snake-alt' : '';
+  return `
+    <svg class="${hueShift}" viewBox="0 0 120 32" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M6 17 C22 4 34 29 50 16 S78 4 94 16 S109 28 116 14" class="sl-snake-body" />
+      <path d="M106 10 L118 14 L106 20" class="sl-snake-head" />
+      <circle cx="111" cy="13" r="1.3" class="sl-snake-eye" />
+      <path d="M117 14 L121 12 M117 14 L121 16" class="sl-snake-tongue" />
+    </svg>
+  `;
 }
 
 /**
@@ -904,4 +956,11 @@ function resetGame() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initSetupForm();
+});
+
+let connectorResizeTimer = null;
+window.addEventListener('resize', () => {
+  if (!gameStarted) return;
+  clearTimeout(connectorResizeTimer);
+  connectorResizeTimer = setTimeout(renderConnectors, 120);
 });
