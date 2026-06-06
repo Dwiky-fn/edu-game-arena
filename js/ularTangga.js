@@ -4,7 +4,8 @@
    ============================================================ */
 
 'use strict';
-// ─── Constants ────────────────────────────────────────────────
+
+// ─── Constants ────────────────────────────────────────────────
 const TOTAL_TILES = 100;
 const COLS = 10;
 const ROWS = 10;
@@ -254,19 +255,19 @@ let isRolling = false;
 let selectedPlayerCount = 1;
 
 // ─── DOM References ────────────────────────────────────────────
-const setupScreen     = () => document.getElementById('setupScreen');
-const gameScreen      = () => document.getElementById('gameScreen');
-const board           = () => document.getElementById('board');
-const playerInfo      = () => document.getElementById('playerInfo');
-const turnIndicator   = () => document.getElementById('turnIndicator');
-const diceImg         = () => document.getElementById('diceImg');
-const diceNumber      = () => document.getElementById('diceNumber');
-const diceResult      = () => document.getElementById('diceResult');
-const rollDiceBtn     = () => document.getElementById('rollDiceBtn');
-const messageText     = () => document.getElementById('messageText');
-const questionModal   = () => document.getElementById('questionModal');
-const winModal        = () => document.getElementById('winModal');
-const eventModal      = () => document.getElementById('eventModal');
+const setupScreen = () => document.getElementById('setupScreen');
+const gameScreen = () => document.getElementById('gameScreen');
+const board = () => document.getElementById('board');
+const playerInfo = () => document.getElementById('playerInfo');
+const turnIndicator = () => document.getElementById('turnIndicator');
+const diceImg = () => document.getElementById('diceImg');
+const diceNumber = () => document.getElementById('diceNumber');
+const diceResult = () => document.getElementById('diceResult');
+const rollDiceBtn = () => document.getElementById('rollDiceBtn');
+const messageText = () => document.getElementById('messageText');
+const questionModal = () => document.getElementById('questionModal');
+const winModal = () => document.getElementById('winModal');
+const eventModal = () => document.getElementById('eventModal');
 
 // ─── Setup Form ────────────────────────────────────────────────
 
@@ -297,7 +298,7 @@ function renderPlayerNameInputs(count) {
   container.innerHTML = '';
   for (let i = 0; i < count; i++) {
     const colorClass = PLAYER_COLORS[i];
-    const colorHex   = PLAYER_COLOR_HEX[i];
+    const colorHex = PLAYER_COLOR_HEX[i];
     container.innerHTML += `
       <div class="sl-name-input-wrap">
         <div class="sl-player-avatar-mini sl-color-${i}" style="background:${colorHex};">${i + 1}</div>
@@ -409,23 +410,21 @@ function buildGrid() {
 }
 
 function getTileType(num, event) {
-  if (num === 1)  return 'start';
+  if (num === 1) return 'start';
   if (num === 100) return 'finish';
-  if (!event)     return 'normal';
+  if (!event) return 'normal';
   return event.type;
 }
 
 function getTileIcon(num, event) {
-  if (num === 1)  return '<img src="assets/ular-tangga/mascot.png" alt="Start" class="sl-tile-img"/>';
-  if (num === 100) return '<img src="assets/ular-tangga/trophy.png" alt="Finish" class="sl-tile-img"/>';
+  if (num === 1) return '🚀';
+  if (num === 100) return '🏆';
   if (!event) return '';
-  if (event.type === 'ladder')   return '<img src="assets/ular-tangga/ladder.png" alt="Ladder" class="sl-tile-img"/>';
-  if (event.type === 'snake')    return '<img src="assets/ular-tangga/snake.png" alt="Snake" class="sl-tile-img"/>';
-  if (event.type === 'question') return '<img src="assets/ular-tangga/question-card.png" alt="Question" class="sl-tile-img"/>';
+  if (event.type === 'ladder') return '🪜';
+  if (event.type === 'snake') return '🐍';
+  if (event.type === 'question') return '❓';
   return '';
 }
-
-
 
 // ─── Dice ──────────────────────────────────────────────────────
 
@@ -559,7 +558,7 @@ let eventModalCallback = null;
 function showEventModal(icon, title, message, callback) {
   document.getElementById('eventModalIcon').textContent = icon;
   document.getElementById('eventModalTitle').textContent = title;
-  document.getElementById('eventModalMsg').textContent  = message;
+  document.getElementById('eventModalMsg').textContent = message;
   eventModalCallback = callback;
   eventModal().classList.remove('hidden');
 }
@@ -580,7 +579,7 @@ function closeEventModal() {
 function showQuestionModal(eventData) {
   const modal = questionModal();
   document.getElementById('questionTitle').textContent = eventData.title;
-  document.getElementById('questionText').textContent  = eventData.question;
+  document.getElementById('questionText').textContent = eventData.question;
 
   const optContainer = document.getElementById('optionsContainer');
   const letters = ['A', 'B', 'C', 'D'];
@@ -621,7 +620,7 @@ function checkAnswer(selectedIndex, eventData) {
   }
 
   const isCorrect = selectedIndex === eventData.correctAnswer;
-  const feedback  = document.getElementById('answerFeedback');
+  const feedback = document.getElementById('answerFeedback');
   const feedbackText = document.getElementById('feedbackText');
 
   feedback.className = `sl-answer-feedback ${isCorrect ? 'correct-fb' : 'wrong-fb'}`;
@@ -674,7 +673,7 @@ function nextTurn() {
  */
 function updatePlayerInfo() {
   const indicator = turnIndicator();
-  const current   = players[currentPlayerIndex];
+  const current = players[currentPlayerIndex];
   indicator.textContent = `🎯 Giliran: ${current ? current.name : '—'}`;
 
   const panel = playerInfo();
@@ -768,8 +767,8 @@ function spawnConfetti() {
  */
 function resetGame() {
   gameStarted = false;
-  isRolling   = false;
-  players     = [];
+  isRolling = false;
+  players = [];
   currentPlayerIndex = 0;
 
   // Close all modals
@@ -783,8 +782,8 @@ function resetGame() {
 
   // Reset dice
   diceNumber().textContent = '';
-  diceResult().textContent  = 'Tekan tombol untuk lempar dadu!';
-  rollDiceBtn().disabled    = false;
+  diceResult().textContent = 'Tekan tombol untuk lempar dadu!';
+  rollDiceBtn().disabled = false;
 
   // Switch screens
   gameScreen().classList.add('hidden');
