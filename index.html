@@ -4,61 +4,180 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Edu Game Arena - Beranda</title>
+  <title>Edu Game Arena - Platform Game Edukatif</title>
 
   <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
   <link rel="stylesheet" href="styles/home.css" />
   <link rel="stylesheet" href="styles/footer.css" />
-
 </head>
 
 <body>
-  <div class="container">
-    <header>
-      <h1>🎮 Edu Game Arena</h1>
+  <div class="container home-container">
+    
+    <!-- Hero Header -->
+    <header class="hero-header">
+      <div class="hero-badge">
+        <span class="badge-dot"></span> Platform Game Edukasi Interaktif
+      </div>
+      <h1 class="hero-title">🎮 Edu Game Arena</h1>
       <p class="subtitle">Belajar Sambil Bermain, Pintar Penuh Ceria!</p>
+
+      <div class="feature-chips">
+        <div class="chip">⚡ Kuis Interaktif</div>
+        <div class="chip">👥 Multiplayer Seru</div>
+        <div class="chip">📚 Bank Soal Kustom</div>
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <a href="banksoal.html" class="nav-btn primary-btn">
+          <span class="nav-icon">📚</span> Bank Soal
+        </a>
+        <button class="nav-btn secondary-btn" onclick="openInfoModal()">
+          <span class="nav-icon">ℹ️</span> Tentang Platform
+        </button>
+      </div>
     </header>
 
-    <div class="nav-buttons">
-      <a href="banksoal.html" class="nav-btn">📚 Bank Soal</a>
-      <a href="#" class="nav-btn" onclick="showInfo(); return false;">ℹ️ Tentang</a>
+    <!-- Main Section Header -->
+    <div class="section-heading">
+      <div class="heading-line"></div>
+      <h2>🎯 Pilihan Permainan Edukatif</h2>
+      <div class="heading-line"></div>
     </div>
 
+    <!-- Games Grid -->
     <div class="games-grid">
-      <div class="game-card available" onclick="window.location.href='game.html'">
-        <div class="game-icon"><img src="assets/tug-of-war.png" alt="Tarik Tambang Kuis"></div>
-        <div class="game-title">Tarik Tambang Kuis</div>
-        <div class="game-desc">
-          Dua tim bertarung menjawab soal! Tim dengan jawaban benar terbanyak dalam 1 menit menang!
+
+      <!-- Game 1: Tarik Tambang Kuis -->
+      <div class="game-card available game-tug-of-war" onclick="window.location.href='game.html'">
+        <div class="card-badges">
+          <span class="card-tag tag-hot">🔥 Paling Seru</span>
+          <span class="card-tag tag-mode">⚔️ Duel 2 Tim</span>
         </div>
-        <button class="play-btn">Mainkan Sekarang</button>
+        <div class="game-icon-wrap">
+          <img src="assets/tug-of-war.png" alt="Tarik Tambang Kuis" class="game-img" />
+        </div>
+        <div class="game-info">
+          <h3 class="game-title">Tarik Tambang Kuis</h3>
+          <p class="game-desc">
+            Dua tim saling adu kecepatan dan ketepatan menjawab soal! Tarik tali ke sisi timmu dan rebut kemenangan dalam 1 menit!
+          </p>
+          <div class="game-meta">
+            <span class="meta-item">⏱️ 1 Menit</span>
+            <span class="meta-item">👥 Tim A vs Tim B</span>
+            <span class="meta-item">🏆 Tarik Tambang</span>
+          </div>
+        </div>
+        <button class="play-btn" onclick="event.stopPropagation(); window.location.href='game.html'">
+          Mainkan Sekarang <span class="btn-arrow">🚀</span>
+        </button>
       </div>
 
-      <div class="game-card available" onclick="window.location.href='ular-tangga.html'">
-        <div class="game-icon"><img src="assets/icons/ular-tangga-adab.png" alt="Ular Tangga Adab"></div>
-        <div class="game-title">Ular Tangga Adab</div>
-        <div class="game-desc">
-          Belajar adab kepada orang tua dan guru melalui permainan ular tangga. Naik karena adab, turun karena sikap!
+      <!-- Game 2: Ular Tangga Adab -->
+      <div class="game-card available game-snakes-ladders" onclick="window.location.href='ular-tangga.html'">
+        <div class="card-badges">
+          <span class="card-tag tag-featured">⭐ Favorit Edukasi</span>
+          <span class="card-tag tag-mode">🎲 2-4 Pemain</span>
         </div>
-        <button class="play-btn" onclick="event.stopPropagation(); window.location.href='ular-tangga.html'">Mainkan</button>
+        <div class="game-icon-wrap">
+          <img src="assets/icons/ular-tangga-adab.png" alt="Ular Tangga Adab" class="game-img" />
+        </div>
+        <div class="game-info">
+          <h3 class="game-title">Ular Tangga Adab</h3>
+          <p class="game-desc">
+            Petualangan 100 kotak belajar adab mulia kepada orang tua, guru, dan teman. Naik karena adab terpuji, turun karena sikap tercela!
+          </p>
+          <div class="game-meta">
+            <span class="meta-item">🎲 Lempar Dadu</span>
+            <span class="meta-item">🪜 Tangga Kebaikan</span>
+            <span class="meta-item">❓ Kuis Adab</span>
+          </div>
+        </div>
+        <button class="play-btn" onclick="event.stopPropagation(); window.location.href='ular-tangga.html'">
+          Mainkan Sekarang <span class="btn-arrow">🎲</span>
+        </button>
       </div>
 
+      <!-- Game 3: Puzzle Kata (Coming Soon) -->
       <div class="game-card coming-soon">
-        <div class="game-icon">🧩</div>
-        <div class="game-title">Puzzle Kata</div>
-        <div class="game-desc">
-          Susun kata dari huruf acak dan kumpulkan poin sebanyak mungkin!
+        <div class="card-badges">
+          <span class="card-tag tag-soon">⏳ Segera Hadir</span>
         </div>
-        <div class="coming-soon-badge">Akan Datang</div>
+        <div class="game-icon-wrap emoji-wrap">
+          <span class="game-emoji">🧩</span>
+        </div>
+        <div class="game-info">
+          <h3 class="game-title">Puzzle Kata</h3>
+          <p class="game-desc">
+            Susun huruf-huruf acak menjadi kosakata yang bermakna dan kumpulkan poin sebanyak mungkin sebelum waktu habis!
+          </p>
+        </div>
+        <div class="coming-soon-badge">🛠️ Dalam Pengembangan</div>
       </div>
 
+      <!-- Game 4: Lari Cerdas (Coming Soon) -->
       <div class="game-card coming-soon">
-        <div class="game-icon">🏃</div>
-        <div class="game-title">Lari Cerdas</div>
-        <div class="game-desc">
-          Berlari sambil menjawab soal, hindari jawaban yang salah!
+        <div class="card-badges">
+          <span class="card-tag tag-soon">⏳ Segera Hadir</span>
         </div>
-        <div class="coming-soon-badge">Akan Datang</div>
+        <div class="game-icon-wrap emoji-wrap">
+          <span class="game-emoji">🏃‍♂️</span>
+        </div>
+        <div class="game-info">
+          <h3 class="game-title">Lari Cerdas</h3>
+          <p class="game-desc">
+            Berlari sambil menjawab rintangan soal cerdas, hindari jalur jawaban salah dan raih garis finish tercepat!
+          </p>
+        </div>
+        <div class="coming-soon-badge">🛠️ Dalam Pengembangan</div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Modal Tentang Platform -->
+  <div class="modal-overlay" id="info-modal" onclick="closeInfoModalOnOverlay(event)">
+    <div class="modal-card">
+      <button class="modal-close-btn" onclick="closeInfoModal()">&times;</button>
+      <div class="modal-icon">🎮</div>
+      <h2 class="modal-title">Edu Game Arena</h2>
+      <span class="modal-version-badge">Versi 1.0</span>
+      <p class="modal-tagline">Belajar Sambil Bermain, Pintar Penuh Ceria!</p>
+
+      <div class="modal-body-content">
+        <p>
+          <strong>Edu Game Arena</strong> adalah platform arena permainan edukatif interaktif berbasis web yang menggabungkan keseruan bermain dengan pendalaman materi belajar.
+        </p>
+
+        <div class="feature-list">
+          <div class="feature-item">
+            <span class="feature-icon">⚡</span>
+            <div class="feature-text">
+              <strong>Kuis Interaktif Cepat</strong>
+              <span>Mengasah ketangkasan berpikir dan pengambilan keputusan.</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">👥</span>
+            <div class="feature-text">
+              <strong>Kolaboratif & Kompetitif</strong>
+              <span>Mendukung pertandingan multi-pemain dalam satu layar atau perangkat.</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <span class="feature-icon">📚</span>
+            <div class="feature-text">
+              <strong>Bank Soal Mandiri</strong>
+              <span>Pengajar dapat membuat materi dan folder soal kustom secara mudah.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="modal-btn-confirm" onclick="closeInfoModal()">Mengerti & Mulai Main</button>
       </div>
     </div>
   </div>

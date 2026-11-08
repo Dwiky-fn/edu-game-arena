@@ -15,30 +15,30 @@ if (!result) {
   if (trophyEl) trophyEl.textContent = '🎮';
   if (badgeEl) badgeEl.textContent = 'INFORMASI';
 } else {
-  const isDraw = result.winner === 'Seri';
-  const isTeamAWinner = !isDraw && (result.winner === result.teamAName || result.winner === 'TIM A');
-  const isTeamBWinner = !isDraw && (result.winner === result.teamBName || result.winner === 'TIM B');
+    const isDraw = result.winner === 'Seri';
+    const isTeamAWinner = !isDraw && (result.winner === result.teamAName || result.winner === 'TIM A');
+    const isTeamBWinner = !isDraw && (result.winner === result.teamBName || result.winner === 'TIM B');
 
-  if (isDraw) {
-    if (trophyEl) trophyEl.textContent = '🤝';
-    if (titleEl) titleEl.textContent = 'Pertandingan Seri!';
-    if (winnerEl) winnerEl.textContent = 'Sama-Sama Hebat!';
-    if (quoteEl) quoteEl.textContent = 'Kedua tim bertarung dengan sangat sengit dan memperoleh skor yang seimbang!';
-    if (badgeEl) {
-      badgeEl.textContent = 'HASIL SERI';
-      badgeEl.classList.add('badge-draw');
+    if (isDraw) {
+      if (trophyEl) trophyEl.textContent = '🤝';
+      if (titleEl) titleEl.textContent = 'Pertandingan Seri!';
+      if (winnerEl) winnerEl.textContent = 'Sama-Sama Hebat!';
+      if (quoteEl) quoteEl.textContent = 'Kedua tim bertarung dengan sangat sengit dan memperoleh skor yang seimbang!';
+      if (badgeEl) {
+        badgeEl.textContent = 'HASIL SERI';
+        badgeEl.classList.add('badge-draw');
+      }
+    } else {
+      if (titleEl) titleEl.textContent = 'Juara Tarik Tambang!';
+      if (winnerEl) winnerEl.textContent = result.winner;
+      if (quoteEl) quoteEl.textContent = `Selamat kepada ${result.winner}! Strategi cepat dan jawaban tepat membawa kemenangan gemilang! 🎉`;
+      if (badgeEl) badgeEl.textContent = 'JUARA PERTANDINGAN';
+      createConfetti();
     }
-  } else {
-    if (titleEl) titleEl.textContent = 'Juara Tarik Tambang!';
-    if (winnerEl) winnerEl.textContent = result.winner;
-    if (quoteEl) quoteEl.textContent = `Selamat kepada ${result.winner}! Strategi cepat dan jawaban tepat membawa kemenangan gemilang! 🎉`;
-    if (badgeEl) badgeEl.textContent = 'JUARA PERTANDINGAN';
-    createConfetti();
-  }
 
-  // Tampilkan kartu pertarungan (Versus battle arena)
-  if (scoresDiv) {
-    scoresDiv.innerHTML = `
+    // Tampilkan kartu pertarungan (Versus battle arena)
+    if (scoresDiv) {
+      scoresDiv.innerHTML = `
       <div class="team-card team-card-a ${isTeamAWinner ? 'is-winner' : (isDraw ? 'is-draw' : 'is-runner')}">
         ${isTeamAWinner ? '<div class="crown-badge">👑 JUARA 1</div>' : (isDraw ? '<div class="crown-badge draw-badge">🤝 SERI</div>' : '<div class="runner-badge">RUNNER UP</div>')}
         <div class="team-avatar">🔴</div>

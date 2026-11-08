@@ -1,5 +1,6 @@
 /* ===== board.css — Desain Modern Halaman Pemenang ===== */
 
+
 /* Base container centering */
 .board-container {
   flex: 1 0 auto;
@@ -11,6 +12,7 @@
   min-height: calc(100vh - 120px);
   box-sizing: border-box;
 }
+
 
 /* Card Hasil Pertandingan */
 .result-card {
@@ -64,6 +66,7 @@
   display: inline-block;
   filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.22));
 }
+
 
 /* Header & Winner Announcement */
 .result-header {
@@ -257,6 +260,7 @@
   align-self: center;
 }
 
+
 .vs-circle {
   width: 44px;
   height: 44px;
@@ -273,6 +277,7 @@
   letter-spacing: 0.5px;
 }
 
+
 /* Match Statistics Pill Bar */
 .match-stats {
   display: flex;
@@ -286,6 +291,7 @@
   border: 1px dashed rgba(102, 126, 234, 0.25);
 }
 
+
 .stat-pill {
   display: inline-flex;
   align-items: center;
@@ -297,6 +303,7 @@
   border-radius: 30px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
+
 
 .stat-pill strong {
   color: #4f46e5;
@@ -367,14 +374,17 @@
     transform: translateY(0) rotate(0deg) scale(1);
     opacity: 1;
   }
+
   85% {
     opacity: 1;
   }
+
   100% {
     transform: translateY(105vh) rotate(720deg) scale(0.5);
     opacity: 0;
   }
 }
+
 
 /* Animations */
 @keyframes cardAppear {
@@ -382,6 +392,7 @@
     opacity: 0;
     transform: translateY(30px) scale(0.96);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -389,24 +400,30 @@
 }
 
 @keyframes trophyBounce {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0) rotate(0deg);
   }
+
   50% {
     transform: translateY(-10px) rotate(2deg);
   }
 }
+
 
 @keyframes haloPulse {
   0% {
     transform: translate(-50%, -50%) scale(0.9);
     opacity: 0.6;
   }
+
   100% {
     transform: translate(-50%, -50%) scale(1.2);
     opacity: 1;
   }
 }
+
 
 /* Responsive tweaks */
 @media (max-width: 640px) {
