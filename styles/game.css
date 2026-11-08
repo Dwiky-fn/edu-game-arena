@@ -1,4 +1,4 @@
-/* ===== game.css — Desain Modern Arena Tarik Tambang ===== */
+/* ===== game.css — Desain Sempurna Arena Tarik Tambang Kuis ===== */
 
 * {
   margin: 0;
@@ -8,15 +8,15 @@
 
 body {
   font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-  background: linear-gradient(135deg, #3730a3 0%, #4f46e5 50%, #7c3aed 100%);
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #4338ca 100%);
   min-height: 100vh;
   color: #1e293b;
   overflow-x: hidden;
-  padding: 14px 20px 80px 20px;
+  padding: 16px 24px 80px 24px;
   width: 100%;
 }
 
-/* Base Wrapper - FULL WIDTH */
+/* Base Wrapper — FULL WIDTH */
 .game-wrapper {
   width: 100%;
   max-width: 100%;
@@ -27,47 +27,75 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
 }
 
 /* ===== TOP BAR NAVIGATION & SCORE HEADER ===== */
 .game-top-bar {
-  background: rgba(255, 255, 255, 0.16);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
-  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 24px;
+  padding: 14px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
   gap: 16px;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
-/* Left: Back Button */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Nav Back Button */
 .nav-back-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.18);
   color: #ffffff;
   text-decoration: none;
   font-weight: 700;
   font-size: 0.92rem;
-  padding: 8px 18px;
+  padding: 9px 20px;
   border-radius: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-back-btn:hover {
   background: #ffffff;
-  color: #4f46e5;
+  color: #4338ca;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
-/* Center: Timer & Mode Tag */
+/* Sound Toggle Button */
+.sound-toggle-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  transition: all 0.3s ease;
+}
+
+.sound-toggle-btn:hover {
+  background: #ffffff;
+  transform: scale(1.08);
+}
+
+/* Center Timer Box */
 .header-center {
   display: flex;
   flex-direction: column;
@@ -80,17 +108,18 @@ body {
   align-items: center;
   gap: 8px;
   background: #ffffff;
-  padding: 6px 20px;
+  padding: 7px 24px;
   border-radius: 50px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  transition: all 0.3s ease;
 }
 
 .timer-icon {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
 }
 
 .timer-val {
-  font-size: 1.6rem;
+  font-size: 1.75rem;
   font-weight: 900;
   color: #f43f5e;
   letter-spacing: 1px;
@@ -100,57 +129,57 @@ body {
 .timer-box.timer-warning {
   background: #ffe4e6;
   border: 2px solid #f43f5e;
-  animation: timerPulse 1s infinite alternate;
+  animation: timerPulse 0.9s infinite alternate;
 }
 
 @keyframes timerPulse {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.05); }
+  0% { transform: scale(1); box-shadow: 0 0 10px rgba(244, 63, 94, 0.3); }
+  100% { transform: scale(1.08); box-shadow: 0 0 25px rgba(244, 63, 94, 0.7); }
 }
 
 .arena-tag {
   font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 1.2px;
+  letter-spacing: 1.5px;
   color: rgba(255, 255, 255, 0.85);
   text-transform: uppercase;
 }
 
-/* Right: Score Board */
+/* Right Score Board */
 .score-board {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .team-score-chip {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 16px;
+  gap: 10px;
+  padding: 8px 18px;
   border-radius: 50px;
   font-weight: 800;
   background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .team-score-a {
-  border-left: 4px solid #ef4444;
+  border-left: 5px solid #ef4444;
 }
 
 .team-score-b {
-  border-right: 4px solid #3b82f6;
+  border-right: 5px solid #3b82f6;
 }
 
 .chip-label {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   color: #475569;
 }
 
 .chip-val {
-  font-size: 1.35rem;
+  font-size: 1.45rem;
   font-weight: 900;
-  min-width: 20px;
+  min-width: 22px;
   text-align: center;
 }
 
@@ -163,17 +192,17 @@ body {
 }
 
 .score-vs-divider {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.7);
   font-weight: 900;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
-/* ===== MAIN PLAY AREA ===== */
+/* ===== MAIN PLAY AREA (FULL WIDTH 3-COLUMN) ===== */
 .main-play-area {
   display: flex;
   justify-content: space-between;
   align-items: stretch;
-  gap: 20px;
+  gap: 22px;
   width: 100%;
 }
 
@@ -184,20 +213,20 @@ body {
   max-width: none;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
   touch-action: manipulation;
 }
 
-/* Team Identity Bars */
+/* Team Identity Bar */
 .team-identity-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 16px;
-  border-radius: 16px;
+  padding: 10px 18px;
+  border-radius: 18px;
   font-weight: 800;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
 .bar-a {
@@ -209,68 +238,71 @@ body {
 }
 
 .team-badge {
-  font-size: 0.92rem;
+  font-size: 1rem;
   letter-spacing: 0.5px;
 }
 
 .team-status-pill {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   background: rgba(255, 255, 255, 0.25);
-  padding: 3px 10px;
+  padding: 4px 12px;
   border-radius: 20px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
 }
 
-/* Question Cards */
+/* Question Card */
 .question-card {
   background: #ffffff;
-  border-radius: 24px;
-  padding: 24px 20px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
+  border-radius: 26px;
+  padding: 26px 22px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
-  border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
 }
 
 .card-a {
-  border-top: 5px solid #ef4444;
+  border-top: 6px solid #ef4444;
 }
 
 .card-b {
-  border-top: 5px solid #3b82f6;
+  border-top: 6px solid #3b82f6;
 }
 
 .question-header {
   margin-bottom: 14px;
   border-bottom: 1px solid #f1f5f9;
-  padding-bottom: 8px;
+  padding-bottom: 10px;
 }
 
 .q-label {
   display: block;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 1.2px;
   color: #94a3b8;
   text-transform: uppercase;
 }
 
 .question-header h3 {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 800;
   color: #1e293b;
   margin-top: 2px;
 }
 
 .question-text {
-  font-size: 1.05rem;
+  font-size: 1.12rem;
   font-weight: 600;
-  line-height: 1.55;
+  line-height: 1.6;
   color: #334155;
-  min-height: 64px;
-  margin-bottom: 20px;
+  min-height: 70px;
+  margin-bottom: 22px;
   display: flex;
   align-items: center;
 }
@@ -279,22 +311,22 @@ body {
 .options-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 /* Option Buttons */
 .option-btn {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
+  gap: 14px;
+  padding: 13px 16px;
   border: 2px solid #e2e8f0;
-  border-radius: 16px;
+  border-radius: 18px;
   background: #f8fafc;
   cursor: pointer;
   text-align: left;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  font-size: 0.92rem;
+  font-size: 0.98rem;
   font-weight: 600;
   color: #334155;
   touch-action: none;
@@ -307,7 +339,7 @@ body {
   border-color: #cbd5e1;
   background: #ffffff;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .card-a .option-btn:hover:not(:disabled) {
@@ -320,26 +352,40 @@ body {
   background: #eff6ff;
 }
 
-/* Option Letter Badge */
+/* Option Letter Badge — Kahoot/Quizizz Palette */
 .opt-letter {
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.85rem;
-  font-weight: 800;
+  font-size: 0.95rem;
+  font-weight: 900;
   flex-shrink: 0;
-  background: #ffffff;
-  color: #475569;
-  border: 1px solid #cbd5e1;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.opt-a .opt-letter {
+  background: linear-gradient(135deg, #ef4444, #f87171);
+}
+
+.opt-b .opt-letter {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+}
+
+.opt-c .opt-letter {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+}
+
+.opt-d .opt-letter {
+  background: linear-gradient(135deg, #10b981, #34d399);
 }
 
 .opt-text {
   flex: 1;
-  line-height: 1.4;
+  line-height: 1.45;
 }
 
 /* Answer Feedback States */
@@ -347,14 +393,13 @@ body {
   background: #ecfdf5 !important;
   border-color: #10b981 !important;
   color: #065f46 !important;
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25) !important;
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3) !important;
   animation: popCorrect 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .option-btn.correct .opt-letter {
-  background: #10b981;
-  color: #ffffff;
-  border-color: #10b981;
+  background: #10b981 !important;
+  color: #ffffff !important;
 }
 
 .option-btn.incorrect {
@@ -365,9 +410,8 @@ body {
 }
 
 .option-btn.incorrect .opt-letter {
-  background: #ef4444;
-  color: #ffffff;
-  border-color: #ef4444;
+  background: #ef4444 !important;
+  color: #ffffff !important;
 }
 
 .option-btn:disabled {
@@ -382,8 +426,8 @@ body {
 
 @keyframes shakeIncorrect {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  75% { transform: translateX(6px); }
+  25% { transform: translateX(-7px); }
+  75% { transform: translateX(7px); }
 }
 
 /* ===== ROPE CENTER ZONE (ARENA TARIK TAMBANG) ===== */
@@ -395,27 +439,31 @@ body {
 
 .rope-container {
   background: #ffffff;
-  border-radius: 26px;
-  padding: 26px 24px;
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
+  border-radius: 28px;
+  padding: 28px 26px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.25);
   text-align: center;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
-/* Teams Name Matchup Box */
+/* Teams Matchup Header */
 .teams-display {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
 
 .team-card {
   flex: 1;
-  padding: 12px 14px;
-  border-radius: 16px;
+  padding: 12px 16px;
+  border-radius: 18px;
   text-align: center;
   color: #ffffff;
   font-weight: 800;
@@ -423,11 +471,11 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .team-card h3 {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
 }
 
 .team-card.team-a {
@@ -439,37 +487,95 @@ body {
 }
 
 .vs-flag {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  background: #1e293b;
-  color: #f8fafc;
+  background: #1e1b4b;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 900;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   letter-spacing: 0.5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border: 2px solid #ffffff;
 }
 
-/* Tug of War Pull Meter Track */
-.pull-meter-wrapper {
-  margin-bottom: 18px;
-  padding: 12px;
+/* Battle Ticker */
+.battle-ticker {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #475569;
   background: #f8fafc;
-  border-radius: 16px;
+  padding: 8px 16px;
+  border-radius: 50px;
   border: 1px solid #e2e8f0;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+/* Tug of War Pull Meter */
+.pull-meter-wrapper {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border-radius: 18px;
+  border: 1px solid #e2e8f0;
+}
+
+.meter-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.meter-side-a {
+  color: #ef4444;
+}
+
+.meter-side-b {
+  color: #3b82f6;
+}
+
+.meter-center-tag {
+  color: #94a3b8;
+  font-size: 0.68rem;
 }
 
 .meter-bar-track {
   position: relative;
-  height: 18px;
-  background: linear-gradient(90deg, #fee2e2 0%, #f1f5f9 50%, #dbeafe 100%);
+  height: 20px;
+  background: #e2e8f0;
   border-radius: 50px;
   border: 1px solid #cbd5e1;
-  margin: 8px 0;
   overflow: visible;
+}
+
+.meter-fill-a {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 50%;
+  width: 0%;
+  background: linear-gradient(90deg, #f87171, #ef4444);
+  border-radius: 50px 0 0 50px;
+  transition: width 0.4s ease;
+}
+
+.meter-fill-b {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 0%;
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+  border-radius: 0 50px 50px 0;
+  transition: width 0.4s ease;
 }
 
 .meter-center-line {
@@ -478,9 +584,10 @@ body {
   bottom: -4px;
   left: 50%;
   width: 3px;
-  background: #94a3b8;
+  background: #64748b;
   transform: translateX(-50%);
   border-radius: 2px;
+  z-index: 2;
 }
 
 .meter-indicator {
@@ -488,71 +595,76 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 1.3rem;
+  font-size: 1.35rem;
   transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.35));
+  z-index: 3;
 }
 
-.meter-side {
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.8px;
-}
-
-.meter-side-a {
-  color: #ef4444;
-  text-align: left;
-}
-
-.meter-side-b {
-  color: #3b82f6;
-  text-align: right;
-  margin-top: -18px;
-}
-
-/* Rope Sprite Visual with Center Ribbon */
+/* Rope Stadium Arena Pitch */
 .rope-visual {
   position: relative;
   width: 100%;
-  height: 135px;
-  margin: 10px 0 16px 0;
+  height: 145px;
+  margin: 8px 0 16px 0;
   overflow: hidden;
-  border-radius: 18px;
+  border-radius: 20px;
   background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
-  border: 1px solid #cbd5e1;
-  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 2px solid #cbd5e1;
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.rope-center-marker {
+/* Pitch goal lines */
+.pitch-line {
   position: absolute;
   top: 0;
   bottom: 0;
+  width: 4px;
+  z-index: 5;
+}
+
+.pitch-left {
+  left: 12%;
+  background: #ef4444;
+  border-right: 2px dashed rgba(239, 68, 68, 0.5);
+}
+
+.pitch-left::after {
+  content: 'GOAL A';
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  font-size: 9px;
+  font-weight: 900;
+  color: #ef4444;
+  letter-spacing: 0.5px;
+}
+
+.pitch-center {
   left: 50%;
-  width: 2px;
-  border-left: 2px dashed #ef4444;
   transform: translateX(-50%);
-  z-index: 10;
-  opacity: 0.7;
+  border-left: 2px dashed #94a3b8;
+  width: 2px;
 }
 
-.rope-center-marker::before {
-  content: '▼';
+.pitch-right {
+  right: 12%;
+  background: #3b82f6;
+  border-left: 2px dashed rgba(59, 130, 246, 0.5);
+}
+
+.pitch-right::after {
+  content: 'GOAL B';
   position: absolute;
-  top: 2px;
-  left: -5px;
-  font-size: 10px;
-  color: #ef4444;
+  bottom: 6px;
+  right: 6px;
+  font-size: 9px;
+  font-weight: 900;
+  color: #3b82f6;
+  letter-spacing: 0.5px;
 }
 
-.rope-center-marker::after {
-  content: '▲';
-  position: absolute;
-  bottom: 2px;
-  left: -5px;
-  font-size: 10px;
-  color: #ef4444;
-}
-
+/* Tug Image Sprite */
 .rope-img {
   position: absolute;
   width: 82%;
@@ -560,24 +672,43 @@ body {
   top: 50%;
   transform: translateY(-50%);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.18));
+}
+
+/* Rope Center Ribbon Marker */
+.rope-center-marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.4rem;
+  z-index: 6;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.25));
 }
 
 /* Rope Footer Tip */
 .rope-footer-tip {
-  font-size: 0.82rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: #64748b;
   background: #f8fafc;
-  padding: 6px 14px;
+  padding: 8px 16px;
   border-radius: 20px;
   display: inline-block;
+  line-height: 1.4;
 }
 
 /* ===== RESPONSIVE BREAKPOINTS ===== */
 @media (max-width: 1080px) {
+  body {
+    padding: 12px 14px 70px 14px;
+  }
+
   .main-play-area {
     flex-direction: column;
     align-items: center;
+    gap: 16px;
   }
 
   .rope-center-zone {
@@ -602,24 +733,25 @@ body {
 
 @media (max-width: 640px) {
   body {
-    padding: 10px 8px 60px 8px;
+    padding: 8px 8px 60px 8px;
   }
 
   .game-top-bar {
     padding: 10px 14px;
     gap: 10px;
+    border-radius: 18px;
   }
 
   .timer-val {
-    font-size: 1.3rem;
+    font-size: 1.35rem;
   }
 
   .chip-val {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
   }
 
   .rope-visual {
-    height: 105px;
+    height: 110px;
   }
 
   .rope-container {
@@ -631,7 +763,7 @@ body {
   }
 
   .question-text {
-    font-size: 0.95rem;
+    font-size: 0.98rem;
     min-height: auto;
   }
 }

@@ -1,5 +1,69 @@
+/* ===== game.js — Tarik Tambang Kuis Game Engine ===== */
+
 let gameState = {};
 
+/* ===== WEB AUDIO SOUND FX SYNTHESIZER ===== */
+const SoundFX = (() => {
+  let ctx = null;
+  let enabled = true;
+
+  function getCtx() {
+    if (!ctx) {
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return ctx;
+  }
+
+  function playTone(freq, duration, type = 'sine', vol = 0.25) {
+    if (!enabled) return;
+    try {
+      const c = getCtx();
+      const osc = c.createOscillator();
+      const gain = c.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, c.currentTime);
+      gain.gain.setValueAtTime(vol, c.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, c.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(c.destination);
+      osc.start(c.currentTime);
+      osc.stop(c.currentTime + duration);
+    } catch (e) { /* ignore audio errors */ }
+  }
+
+  return {
+    correct() {
+      playTone(523.25, 0.12, 'sine', 0.3);   // C5
+      setTimeout(() => playTone(659.25, 0.12, 'sine', 0.3), 100);  // E5
+      setTimeout(() => playTone(783.99, 0.2, 'sine', 0.3), 200);   // G5
+    },
+    incorrect() {
+      playTone(220, 0.25, 'sawtooth', 0.2);
+      setTimeout(() => playTone(180, 0.3, 'sawtooth', 0.2), 150);
+    },
+    pull() {
+      playTone(392, 0.08, 'triangle', 0.15);  // G4 short thud
+    },
+    countdown() {
+      playTone(440, 0.15, 'sine', 0.2);       // A4 beep
+    },
+    victory() {
+      const notes = [523.25, 659.25, 783.99, 1046.5];
+      notes.forEach((f, i) => setTimeout(() => playTone(f, 0.25, 'sine', 0.3), i * 150));
+    },
+    get enabled() { return enabled; },
+    set enabled(v) { enabled = v; },
+  };
+})();
+
+function toggleSound() {
+  SoundFX.enabled = !SoundFX.enabled;
+  const icon = document.getElementById('sound-icon');
+  if (icon) icon.textContent = SoundFX.enabled ? '🔊' : '🔇';
+}
+window.toggleSound = toggleSound;
+
+/* ===== UTILITY ===== */
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -8,6 +72,7 @@ function shuffle(array) {
   return array;
 }
 
+/* ===== GAME INIT ===== */
 window.onload = async () => {
   const TEAM_A = 'TIM A';
   const TEAM_B = 'TIM B';
@@ -55,14 +120,18 @@ window.onload = async () => {
   }
 };
 
+/* ===== START GAME ===== */
 function startGame() {
   if (gameState.interval) clearInterval(gameState.interval);
   renderQuestion('A');
   renderQuestion('B');
   startTimer();
+  updateMeter();
+  updateTicker();
 }
 window.startGame = startGame;
 
+/* ===== RENDER QUESTION ===== */
 function renderQuestion(team) {
   const isA = team === 'A';
   const pending = isA ? gameState.teamAPending : gameState.teamBPending;
@@ -89,10 +158,11 @@ function renderQuestion(team) {
   if (!container) return;
   container.innerHTML = '';
 
-  ['a', 'b', 'c', 'd'].forEach((opt) => {
+  const optKeys = ['a', 'b', 'c', 'd'];
+  optKeys.forEach((opt) => {
     if (!q['opsi_' + opt]) return;
     const btn = document.createElement('button');
-    btn.className = 'option-btn';
+    btn.className = `option-btn opt-${opt}`;
     btn.innerHTML = `
       <span class="opt-letter">${opt.toUpperCase()}</span>
       <span class="opt-text">${q['opsi_' + opt]}</span>
@@ -105,6 +175,7 @@ function renderQuestion(team) {
   else gameState.currentBQuestion = q;
 }
 
+/* ===== HANDLE ANSWER ===== */
 function handleAnswer(team, selected, q, btn) {
   const correct = (q.jawaban_benar || '').toString().toUpperCase();
   const container = document.getElementById(
@@ -119,16 +190,24 @@ function handleAnswer(team, selected, q, btn) {
     if (isCorrect) {
       if (letter === correct) b.classList.add('correct');
     } else {
-      // Jika salah, HANYA beri warna merah pada jawaban yang dipilih pemain (tidak membocorkan jawaban benar)
+      // Jika salah, HANYA beri warna merah pada jawaban yang dipilih pemain
+      // TIDAK membocorkan jawaban benar
       if (letter === selected) b.classList.add('incorrect');
     }
     b.disabled = true;
   });
 
+  // Sound effects
+  if (isCorrect) {
+    SoundFX.correct();
+  } else {
+    SoundFX.incorrect();
+  }
+
   const isA = team === 'A';
   let pending = isA ? gameState.teamAPending : gameState.teamBPending;
 
-  if (selected === correct) {
+  if (isCorrect) {
     if (team === 'A') {
       gameState.teamAScore++;
       moveRope(-8);
@@ -139,9 +218,19 @@ function handleAnswer(team, selected, q, btn) {
     // hapus soal yang sudah benar dari pending
     pending.shift();
 
-    // ✅ Cek jika tim ini sudah selesai semua soal
+    // Cek knockout victory (tali melewati batas)
+    if (gameState.ropePos <= 0 || gameState.ropePos >= 100) {
+      if (gameState.interval) clearInterval(gameState.interval);
+      SoundFX.victory();
+      const knockoutWinner = gameState.ropePos <= 0 ? gameState.teamAName : gameState.teamBName;
+      setTimeout(() => checkWinner(knockoutWinner), 800);
+      return;
+    }
+
+    // Cek jika tim ini sudah selesai semua soal
     if (pending.length === 0) {
       if (gameState.interval) clearInterval(gameState.interval);
+      SoundFX.victory();
       checkWinner(team === 'A' ? gameState.teamAName : gameState.teamBName);
       return;
     }
@@ -155,28 +244,106 @@ function handleAnswer(team, selected, q, btn) {
   setTimeout(() => renderQuestion(team), 700);
 }
 
+/* ===== MOVE ROPE ===== */
 function moveRope(delta) {
   gameState.ropePos += delta;
   if (gameState.ropePos > 100) gameState.ropePos = 100;
   if (gameState.ropePos < 0) gameState.ropePos = 0;
 
+  SoundFX.pull();
+
+  // Geser sprite gambar tug-of-war
   const tug = document.getElementById('tug-of-war');
   if (tug) {
-    const shift = (gameState.ropePos - 50) * 3;
+    const shift = (gameState.ropePos - 50) * 3.5;
     tug.style.transform = `translate(${shift}px, -50%)`;
   }
 
+  // Update flag indicator di meter
   const indicator = document.getElementById('pull-indicator');
   if (indicator) {
     indicator.style.left = `${gameState.ropePos}%`;
   }
+
+  // Update meter fills
+  updateMeter();
+
+  // Update battle ticker
+  updateTicker();
 }
 
+/* ===== UPDATE METER FILLS ===== */
+function updateMeter() {
+  const fillA = document.getElementById('meter-fill-a');
+  const fillB = document.getElementById('meter-fill-b');
+
+  if (fillA) {
+    // Tim A dominance: rope < 50 means A is winning
+    const aPull = Math.max(0, 50 - gameState.ropePos);
+    fillA.style.width = `${aPull}%`;
+  }
+  if (fillB) {
+    // Tim B dominance: rope > 50 means B is winning
+    const bPull = Math.max(0, gameState.ropePos - 50);
+    fillB.style.width = `${bPull}%`;
+  }
+}
+
+/* ===== UPDATE BATTLE TICKER ===== */
+function updateTicker() {
+  const ticker = document.getElementById('battle-ticker');
+  if (!ticker) return;
+
+  const pos = gameState.ropePos;
+  let msg = '';
+
+  if (pos <= 5) {
+    msg = '🔥 TIM A HAMPIR MENANG! Tali sudah di ujung! KNOCKOUT!';
+    ticker.style.background = '#fef2f2';
+    ticker.style.color = '#dc2626';
+    ticker.style.borderColor = '#fca5a5';
+  } else if (pos <= 20) {
+    msg = '💪 TIM A mendominasi! Tali tertarik jauh ke kiri!';
+    ticker.style.background = '#fef2f2';
+    ticker.style.color = '#ef4444';
+    ticker.style.borderColor = '#fca5a5';
+  } else if (pos <= 40) {
+    msg = '◀ TIM A unggul! Terus tarik untuk kemenangan!';
+    ticker.style.background = '#fff7ed';
+    ticker.style.color = '#ea580c';
+    ticker.style.borderColor = '#fed7aa';
+  } else if (pos >= 95) {
+    msg = '🔥 TIM B HAMPIR MENANG! Tali sudah di ujung! KNOCKOUT!';
+    ticker.style.background = '#eff6ff';
+    ticker.style.color = '#2563eb';
+    ticker.style.borderColor = '#93c5fd';
+  } else if (pos >= 80) {
+    msg = '💪 TIM B mendominasi! Tali tertarik jauh ke kanan!';
+    ticker.style.background = '#eff6ff';
+    ticker.style.color = '#3b82f6';
+    ticker.style.borderColor = '#93c5fd';
+  } else if (pos >= 60) {
+    msg = '▶ TIM B unggul! Terus tarik untuk kemenangan!';
+    ticker.style.background = '#f0fdf4';
+    ticker.style.color = '#16a34a';
+    ticker.style.borderColor = '#bbf7d0';
+  } else {
+    msg = '⚖️ Pertandingan seimbang! Jawab cepat untuk menarik tali!';
+    ticker.style.background = '#f8fafc';
+    ticker.style.color = '#475569';
+    ticker.style.borderColor = '#e2e8f0';
+  }
+
+  ticker.textContent = msg;
+}
+
+/* ===== UPDATE SCORE ===== */
 function updateScore() {
   document.getElementById('team-a-score').textContent = gameState.teamAScore;
   document.getElementById('team-b-score').textContent = gameState.teamBScore;
 }
 
+/* ===== TIMER ===== */
 function startTimer() {
   const timerEl = document.getElementById('timer');
   const timerBox = document.getElementById('timer-box');
@@ -191,7 +358,7 @@ function startTimer() {
       timerBox.classList.add('timer-warning');
     }
 
-    // game selesai hanya saat timer habis
+    // game selesai saat timer habis
     if (gameState.timeLeft <= 0) {
       clearInterval(gameState.interval);
       checkWinner();
@@ -199,6 +366,7 @@ function startTimer() {
   }, 1000);
 }
 
+/* ===== CHECK WINNER ===== */
 function checkWinner(directWinner = null) {
   if (gameState.interval) clearInterval(gameState.interval);
 
@@ -228,6 +396,7 @@ function checkWinner(directWinner = null) {
   window.location.href = 'board.html';
 }
 
+/* ===== CSV LOADER ===== */
 async function loadCSVQuestions(url) {
   try {
     const res = await fetch(url);

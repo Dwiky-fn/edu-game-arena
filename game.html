@@ -24,6 +24,9 @@
           <a href="index.html" class="nav-back-btn" title="Kembali ke Beranda">
             <span class="btn-icon">←</span> Beranda
           </a>
+          <button class="sound-toggle-btn" id="sound-btn" onclick="toggleSound()" title="Aktifkan/Bisukan Suara">
+            <span id="sound-icon">🔊</span>
+          </button>
         </div>
 
         <div class="header-center">
@@ -58,7 +61,7 @@
         <section class="team-touch-zone zone-a" id="zone-a">
           <div class="team-identity-bar bar-a">
             <div class="team-badge badge-a">🔴 TIM A</div>
-            <span class="team-status-pill" id="question-progress-a">Menjawab</span>
+            <span class="team-status-pill" id="question-progress-a">Soal 1</span>
           </div>
           <div class="question-card card-a" id="card-a">
             <div class="question-header">
@@ -87,25 +90,42 @@
               </div>
             </div>
 
+            <!-- Battle Live Status Ticker -->
+            <div class="battle-ticker" id="battle-ticker">
+              ⚖️ Pertandingan seimbang! Jawab cepat untuk menarik tali!
+            </div>
+
             <!-- Tug of War Progress Bar Meter -->
             <div class="pull-meter-wrapper">
-              <div class="meter-side meter-side-a">◀ TIM A</div>
+              <div class="meter-labels">
+                <span class="meter-side meter-side-a">◀ GOAL TIM A</span>
+                <span class="meter-center-tag">TITIK TENGAH</span>
+                <span class="meter-side meter-side-b">GOAL TIM B ▶</span>
+              </div>
               <div class="meter-bar-track">
-                <div class="meter-center-line" title="Titik Tengah"></div>
+                <div class="meter-fill-a" id="meter-fill-a"></div>
+                <div class="meter-fill-b" id="meter-fill-b"></div>
+                <div class="meter-center-line"></div>
                 <div class="meter-indicator" id="pull-indicator" style="left: 50%;">🚩</div>
               </div>
-              <div class="meter-side meter-side-b">TIM B ▶</div>
             </div>
 
-            <!-- Rope Sprite Visual with Center Marker -->
-            <div class="rope-visual">
-              <div class="rope-center-marker" title="Garis Batas Tengah"></div>
+            <!-- Rope Stadium Arena Pitch -->
+            <div class="rope-visual" id="rope-visual-box">
+              <div class="pitch-line pitch-left" title="Garis Kemenangan Tim A"></div>
+              <div class="pitch-line pitch-center" title="Garis Tengah"></div>
+              <div class="pitch-line pitch-right" title="Garis Kemenangan Tim B"></div>
+              
               <img src="assets/tug-of-war.png" id="tug-of-war" class="rope-img" alt="Tug of War">
+              
+              <div class="rope-center-marker">
+                <span class="marker-ribbon">🎀</span>
+              </div>
             </div>
 
-            <!-- Battle Tip / Motivational Subtitle -->
+            <!-- Match Guidance Tip -->
             <div class="rope-footer-tip">
-              <span>🎯 Jawab benar untuk menarik tali ke timmu!</span>
+              <span>💡 Jawab benar menarik <strong>+8 langkah</strong> ke arah timmu! Tarik hingga ujung untuk menang telak!</span>
             </div>
 
           </div>
@@ -115,7 +135,7 @@
         <section class="team-touch-zone zone-b" id="zone-b">
           <div class="team-identity-bar bar-b">
             <div class="team-badge badge-b">🔵 TIM B</div>
-            <span class="team-status-pill" id="question-progress-b">Menjawab</span>
+            <span class="team-status-pill" id="question-progress-b">Soal 1</span>
           </div>
           <div class="question-card card-b" id="card-b">
             <div class="question-header">
