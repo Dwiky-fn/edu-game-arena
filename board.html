@@ -9,29 +9,46 @@
   <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
   <link rel="stylesheet" href="styles/board.css">
   <link rel="stylesheet" href="styles/footer.css" />
-
 </head>
 
 <body>
-  <div class="board-grid">
-    <div class="grid-section" id="section-1">
-      <div class="card">
+  <div class="container board-container">
+    <div class="card result-card">
+      
+      <!-- Trophy & Glow Animation -->
+      <div class="trophy-wrapper">
+        <div class="trophy-halo"></div>
         <div class="trophy" id="trophy">🏆</div>
-        <h1 id="title">Pemenang!</h1>
-        <div class="winner-name" id="winner"></div>
-        <div class="scores" id="scores"></div>
-        <div class="actions">
-          <a href="game.html" class="btn btn-primary">🔄 Main Lagi</a>
-          <a href="index.html" class="btn btn-secondary">🏠 Beranda</a>
-        </div>
       </div>
+
+      <!-- Result Header -->
+      <div class="result-header">
+        <div class="badge-pill" id="badge">HASIL PERTANDINGAN</div>
+        <h1 id="title" class="result-title">Pemenang!</h1>
+        <div class="winner-name" id="winner">TIM A</div>
+        <p class="winner-quote" id="winner-quote">Selamat atas kemenangan yang gemilang!</p>
+      </div>
+
+      <!-- Versus Score Arena -->
+      <div class="scores" id="scores"></div>
+
+      <!-- Match Statistics Pill Bar -->
+      <div class="match-stats" id="match-stats"></div>
+
+      <!-- Action Buttons -->
+      <div class="actions">
+        <a href="game.html" class="btn btn-primary">
+          <span class="btn-icon">🔄</span> Main Lagi
+        </a>
+        <a href="index.html" class="btn btn-secondary">
+          <span class="btn-icon">🏠</span> Beranda
+        </a>
+      </div>
+
     </div>
-    <div class="grid-section" id="section-2"></div>
-    <div class="grid-section" id="section-3"></div>
-    <div class="grid-section" id="section-4"></div>
   </div>
+
   <div id="footer-container"></div>
-  
 
   <script src="js/footer.js"></script>
   <script src="js/board.js"></script>
