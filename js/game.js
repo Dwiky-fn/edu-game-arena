@@ -112,11 +112,16 @@ function handleAnswer(team, selected, q, btn) {
   );
   if (!container) return;
 
+  const isCorrect = selected === correct;
+
   container.querySelectorAll('button').forEach((b) => {
     const letter = b.querySelector('.opt-letter')?.textContent.trim() || b.textContent.trim()[0];
-    if (letter === correct) b.classList.add('correct');
-    if (letter === selected && selected !== correct)
-      b.classList.add('incorrect');
+    if (isCorrect) {
+      if (letter === correct) b.classList.add('correct');
+    } else {
+      // Jika salah, HANYA beri warna merah pada jawaban yang dipilih pemain (tidak membocorkan jawaban benar)
+      if (letter === selected) b.classList.add('incorrect');
+    }
     b.disabled = true;
   });
 

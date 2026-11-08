@@ -12,14 +12,15 @@ body {
   min-height: 100vh;
   color: #1e293b;
   overflow-x: hidden;
-  padding: 16px;
-  padding-bottom: 80px;
+  padding: 14px 20px 80px 20px;
+  width: 100%;
 }
 
-/* Base Wrapper */
+/* Base Wrapper - FULL WIDTH */
 .game-wrapper {
-  max-width: 1400px;
-  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
 }
 
 .game-screen {
@@ -170,16 +171,17 @@ body {
 /* ===== MAIN PLAY AREA ===== */
 .main-play-area {
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: space-between;
+  align-items: stretch;
   gap: 20px;
   width: 100%;
 }
 
 /* ===== TEAM TOUCH ZONES (KIRI & KANAN) ===== */
 .team-touch-zone {
-  flex: 1;
-  max-width: 360px;
+  flex: 1 1 30%;
+  min-width: 280px;
+  max-width: none;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -386,8 +388,9 @@ body {
 
 /* ===== ROPE CENTER ZONE (ARENA TARIK TAMBANG) ===== */
 .rope-center-zone {
-  flex: 1.4;
-  max-width: 620px;
+  flex: 1.2 1 40%;
+  min-width: 340px;
+  max-width: none;
 }
 
 .rope-container {
@@ -579,13 +582,13 @@ body {
 
   .rope-center-zone {
     width: 100%;
-    max-width: 700px;
+    max-width: 100%;
     order: 1;
   }
 
   .team-touch-zone {
     width: 100%;
-    max-width: 700px;
+    max-width: 100%;
   }
 
   .zone-a {
