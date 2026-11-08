@@ -8,79 +8,134 @@
 
   <link rel="icon" type="image/png" href="assets/icons/favicon.png" />
   <link rel="stylesheet" href="styles/game.css" />
+  <link rel="stylesheet" href="styles/countdown.css" />
   <link rel="stylesheet" href="styles/footer.css" />
-
 </head>
 
 <body>
   
-  <div class="scale">
-    <div class="container">
-      <!-- Game Screen -->
-      <div class="game-screen active">
-        <!-- Header -->
-        <div class="game-header">
-          <div class="timer" id="timer">1:00</div>
-          <div class="score-display">
-            <div class="team-score">
-              <div class="label" id="team-a-label">Tim A</div>
-              <div class="score" id="team-a-score">0</div>
+  <div class="game-wrapper">
+    <!-- Game Screen -->
+    <div class="game-screen active">
+      
+      <!-- Top Navigation & Score Header -->
+      <header class="game-top-bar">
+        <div class="header-left">
+          <a href="index.html" class="nav-back-btn" title="Kembali ke Beranda">
+            <span class="btn-icon">←</span> Beranda
+          </a>
+        </div>
+
+        <div class="header-center">
+          <div class="timer-box" id="timer-box">
+            <span class="timer-icon">⏱️</span>
+            <span class="timer-val" id="timer">1:00</span>
+          </div>
+          <div class="arena-tag">⚔️ BATTLE ARENA</div>
+        </div>
+
+        <div class="header-right">
+          <div class="score-board">
+            <div class="team-score-chip team-score-a">
+              <span class="team-dot dot-a">🔴</span>
+              <span class="chip-label" id="team-a-label">Tim A</span>
+              <span class="chip-val" id="team-a-score">0</span>
             </div>
-            <div class="team-score">
-              <div class="label" id="team-b-label">Tim B</div>
-              <div class="score" id="team-b-score">0</div>
+            <div class="score-vs-divider">:</div>
+            <div class="team-score-chip team-score-b">
+              <span class="team-dot dot-b">🔵</span>
+              <span class="chip-label" id="team-b-label">Tim B</span>
+              <span class="chip-val" id="team-b-score">0</span>
             </div>
           </div>
         </div>
+      </header>
 
-        <!-- Area utama permainan -->
-        <div class="main-play-area">
-        
-          <!-- Zona sentuh TIM A -->
-          <div class="team-touch-zone" id="zone-a">
-            <div class="question-card" id="card-a">
-              <h3 id="question-number-a">Tim A</h3>
-              <div class="question-text" id="question-text-a"></div>
-              <div class="options-container" id="options-container-a"></div>
-            </div>
+      <!-- Main Game Battle Arena -->
+      <main class="main-play-area">
+      
+        <!-- ZONA KIRI: TIM A -->
+        <section class="team-touch-zone zone-a" id="zone-a">
+          <div class="team-identity-bar bar-a">
+            <div class="team-badge badge-a">🔴 TIM A</div>
+            <span class="team-status-pill" id="question-progress-a">Menjawab</span>
           </div>
-        
-          <!-- Rope -->
+          <div class="question-card card-a" id="card-a">
+            <div class="question-header">
+              <span class="q-label">PERTANYAAN</span>
+              <h3 id="question-number-a">Tim A</h3>
+            </div>
+            <div class="question-text" id="question-text-a">Memuat soal...</div>
+            <div class="options-container" id="options-container-a"></div>
+          </div>
+        </section>
+      
+        <!-- ZONA TENGAH: ARENA TARIK TAMBANG -->
+        <section class="rope-center-zone">
           <div class="rope-container">
+            
+            <!-- Teams Name Matchup -->
             <div class="teams-display">
               <div class="team-card team-a" id="team-a-card">
+                <span class="team-icon">🔴</span>
                 <h3 id="team-a-name">Tim A</h3>
               </div>
+              <div class="vs-flag">VS</div>
               <div class="team-card team-b" id="team-b-card">
+                <span class="team-icon">🔵</span>
                 <h3 id="team-b-name">Tim B</h3>
               </div>
             </div>
-            <div class="rope-visual">
-              <img src="assets/tug-of-war.png" id="tug-of-war" class="rope-img">
-            </div>
-          </div>
-        
-          <!-- Zona sentuh TIM B -->
-          <div class="team-touch-zone" id="zone-b">
-            <div class="question-card" id="card-b">
-              <h3 id="question-number-b">Tim B</h3>
-              <div class="question-text" id="question-text-b"></div>
-              <div class="options-container" id="options-container-b"></div>
-            </div>
-          </div>
-        
-        </div>
 
-        </div>
-      </div>
+            <!-- Tug of War Progress Bar Meter -->
+            <div class="pull-meter-wrapper">
+              <div class="meter-side meter-side-a">◀ TIM A</div>
+              <div class="meter-bar-track">
+                <div class="meter-center-line" title="Titik Tengah"></div>
+                <div class="meter-indicator" id="pull-indicator" style="left: 50%;">🚩</div>
+              </div>
+              <div class="meter-side meter-side-b">TIM B ▶</div>
+            </div>
+
+            <!-- Rope Sprite Visual with Center Marker -->
+            <div class="rope-visual">
+              <div class="rope-center-marker" title="Garis Batas Tengah"></div>
+              <img src="assets/tug-of-war.png" id="tug-of-war" class="rope-img" alt="Tug of War">
+            </div>
+
+            <!-- Battle Tip / Motivational Subtitle -->
+            <div class="rope-footer-tip">
+              <span>🎯 Jawab benar untuk menarik tali ke timmu!</span>
+            </div>
+
+          </div>
+        </section>
+      
+        <!-- ZONA KANAN: TIM B -->
+        <section class="team-touch-zone zone-b" id="zone-b">
+          <div class="team-identity-bar bar-b">
+            <div class="team-badge badge-b">🔵 TIM B</div>
+            <span class="team-status-pill" id="question-progress-b">Menjawab</span>
+          </div>
+          <div class="question-card card-b" id="card-b">
+            <div class="question-header">
+              <span class="q-label">PERTANYAAN</span>
+              <h3 id="question-number-b">Tim B</h3>
+            </div>
+            <div class="question-text" id="question-text-b">Memuat soal...</div>
+            <div class="options-container" id="options-container-b"></div>
+          </div>
+        </section>
+      
+      </main>
+
     </div>
   </div>
+
   <div id="footer-container"></div>
   
   <script src="js/footer.js"></script>
   <script src="js/game.js"></script>
-
-  <link rel="stylesheet" href="styles/countdown.css" />
   <script src="js/start-countdown.js"></script>
 
 </body>

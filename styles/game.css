@@ -1,3 +1,5 @@
+/* ===== game.css — Desain Modern Arena Tarik Tambang ===== */
+
 * {
   margin: 0;
   padding: 0;
@@ -5,256 +7,628 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+  background: linear-gradient(135deg, #3730a3 0%, #4f46e5 50%, #7c3aed 100%);
   min-height: 100vh;
-  padding-bottom: 120px;
+  color: #1e293b;
+  overflow-x: hidden;
+  padding: 16px;
+  padding-bottom: 80px;
 }
 
-/* Screens */
-.setup-screen,
-.game-screen {
-  display: none;
-  padding: 20px;
-}
-
-.setup-screen.active,
-.game-screen.active {
-  display: block;
-}
-
-.container {
-  max-width: 800px;
+/* Base Wrapper */
+.game-wrapper {
+  max-width: 1400px;
   margin: 0 auto;
 }
 
-/* HEADER */
-.game-header {
-  background: white;
-  border-radius: 15px;
-  padding: 20px 100px 20px 100px;
-  margin-bottom: 20px;
+.game-screen {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ===== TOP BAR NAVIGATION & SCORE HEADER ===== */
+.game-top-bar {
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  padding: 12px 24px;
+  display: flex;
   align-items: center;
-  width: 800px;
+  justify-content: space-between;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.18);
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-.timer {
-  font-size: 2em;
-  font-weight: bold;
-  color: #f5576c;
+/* Left: Back Button */
+.nav-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.92rem;
+  padding: 8px 18px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  transition: all 0.3s ease;
 }
 
-.score-display {
+.nav-back-btn:hover {
+  background: #ffffff;
+  color: #4f46e5;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Center: Timer & Mode Tag */
+.header-center {
   display: flex;
-  gap: 30px;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
 }
 
-.team-score {
+.timer-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  padding: 6px 20px;
+  border-radius: 50px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.timer-icon {
+  font-size: 1.25rem;
+}
+
+.timer-val {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: #f43f5e;
+  letter-spacing: 1px;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-box.timer-warning {
+  background: #ffe4e6;
+  border: 2px solid #f43f5e;
+  animation: timerPulse 1s infinite alternate;
+}
+
+@keyframes timerPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+.arena-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+}
+
+/* Right: Score Board */
+.score-board {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.team-score-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 50px;
+  font-weight: 800;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.team-score-a {
+  border-left: 4px solid #ef4444;
+}
+
+.team-score-b {
+  border-right: 4px solid #3b82f6;
+}
+
+.chip-label {
+  font-size: 0.88rem;
+  color: #475569;
+}
+
+.chip-val {
+  font-size: 1.35rem;
+  font-weight: 900;
+  min-width: 20px;
   text-align: center;
 }
 
-.team-score .label {
-  font-size: .9em;
-  color: #666;
+.team-score-a .chip-val {
+  color: #ef4444;
 }
 
-.team-score .score {
-  font-size: 1.5em;
-  font-weight: bold;
-  color: #667eea;
+.team-score-b .chip-val {
+  color: #3b82f6;
 }
 
-/* ROPE AREA */
-.rope-container {
-  background: white;
-  border-radius: 15px;
-  padding: 30px;
+.score-vs-divider {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 900;
+  font-size: 1.2rem;
+}
+
+/* ===== MAIN PLAY AREA ===== */
+.main-play-area {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+}
+
+/* ===== TEAM TOUCH ZONES (KIRI & KANAN) ===== */
+.team-touch-zone {
+  flex: 1;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  touch-action: manipulation;
+}
+
+/* Team Identity Bars */
+.team-identity-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  border-radius: 16px;
+  font-weight: 800;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.bar-a {
+  background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+}
+
+.bar-b {
+  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+}
+
+.team-badge {
+  font-size: 0.92rem;
+  letter-spacing: 0.5px;
+}
+
+.team-status-pill {
+  font-size: 0.72rem;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Question Cards */
+.question-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 24px 20px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.16);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.card-a {
+  border-top: 5px solid #ef4444;
+}
+
+.card-b {
+  border-top: 5px solid #3b82f6;
+}
+
+.question-header {
+  margin-bottom: 14px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 8px;
+}
+
+.q-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.question-header h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin-top: 2px;
+}
+
+.question-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.55;
+  color: #334155;
+  min-height: 64px;
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+/* Options Container */
+.options-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Option Buttons */
+.option-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  background: #f8fafc;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #334155;
+  touch-action: none;
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.option-btn:hover:not(:disabled) {
+  border-color: #cbd5e1;
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card-a .option-btn:hover:not(:disabled) {
+  border-color: #fca5a5;
+  background: #fff5f5;
+}
+
+.card-b .option-btn:hover:not(:disabled) {
+  border-color: #93c5fd;
+  background: #eff6ff;
+}
+
+/* Option Letter Badge */
+.opt-letter {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  background: #ffffff;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.opt-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+/* Answer Feedback States */
+.option-btn.correct {
+  background: #ecfdf5 !important;
+  border-color: #10b981 !important;
+  color: #065f46 !important;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.25) !important;
+  animation: popCorrect 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.option-btn.correct .opt-letter {
+  background: #10b981;
+  color: #ffffff;
+  border-color: #10b981;
+}
+
+.option-btn.incorrect {
+  background: #fef2f2 !important;
+  border-color: #ef4444 !important;
+  color: #991b1b !important;
+  animation: shakeIncorrect 0.4s ease;
+}
+
+.option-btn.incorrect .opt-letter {
+  background: #ef4444;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+.option-btn:disabled {
+  cursor: default;
+}
+
+@keyframes popCorrect {
+  0% { transform: scale(0.96); }
+  50% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shakeIncorrect {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+/* ===== ROPE CENTER ZONE (ARENA TARIK TAMBANG) ===== */
+.rope-center-zone {
+  flex: 1.4;
+  max-width: 620px;
+}
+
+.rope-container {
+  background: #ffffff;
+  border-radius: 26px;
+  padding: 26px 24px;
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.22);
   text-align: center;
   position: relative;
+  overflow: hidden;
 }
 
+/* Teams Name Matchup Box */
 .teams-display {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 10px;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
 .team-card {
   flex: 1;
+  padding: 12px 14px;
+  border-radius: 16px;
   text-align: center;
-  padding: 20px;
-  border-radius: 15px;
-  margin-left: 40px;
-  margin-right: 40px;
+  color: #ffffff;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
 }
 
-.team-a {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+.team-card h3 {
+  font-size: 1.1rem;
 }
 
-.team-b {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-  color: white;
+.team-card.team-a {
+  background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
 }
 
-/* SPRITE TUG OF WAR */
+.team-card.team-b {
+  background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+}
+
+.vs-flag {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #1e293b;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Tug of War Pull Meter Track */
+.pull-meter-wrapper {
+  margin-bottom: 18px;
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+}
+
+.meter-bar-track {
+  position: relative;
+  height: 18px;
+  background: linear-gradient(90deg, #fee2e2 0%, #f1f5f9 50%, #dbeafe 100%);
+  border-radius: 50px;
+  border: 1px solid #cbd5e1;
+  margin: 8px 0;
+  overflow: visible;
+}
+
+.meter-center-line {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  left: 50%;
+  width: 3px;
+  background: #94a3b8;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.meter-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.3rem;
+  transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.meter-side {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.meter-side-a {
+  color: #ef4444;
+  text-align: left;
+}
+
+.meter-side-b {
+  color: #3b82f6;
+  text-align: right;
+  margin-top: -18px;
+}
+
+/* Rope Sprite Visual with Center Ribbon */
 .rope-visual {
   position: relative;
   width: 100%;
-  height: 120px;
-  margin: 10px 0;
+  height: 135px;
+  margin: 10px 0 16px 0;
   overflow: hidden;
+  border-radius: 18px;
+  background: linear-gradient(180deg, #f1f5f9 0%, #e2e8f0 100%);
+  border: 1px solid #cbd5e1;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.rope-center-marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  border-left: 2px dashed #ef4444;
+  transform: translateX(-50%);
+  z-index: 10;
+  opacity: 0.7;
+}
+
+.rope-center-marker::before {
+  content: '▼';
+  position: absolute;
+  top: 2px;
+  left: -5px;
+  font-size: 10px;
+  color: #ef4444;
+}
+
+.rope-center-marker::after {
+  content: '▲';
+  position: absolute;
+  bottom: 2px;
+  left: -5px;
+  font-size: 10px;
+  color: #ef4444;
 }
 
 .rope-img {
   position: absolute;
-  width: 80%;
-  left: 10%;
+  width: 82%;
+  left: 9%;
   top: 50%;
   transform: translateY(-50%);
-  image-rendering: pixelated;
-  transition: transform 0.5s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* QUESTIONS */
-.question-area {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
+/* Rope Footer Tip */
+.rope-footer-tip {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748b;
+  background: #f8fafc;
+  padding: 6px 14px;
+  border-radius: 20px;
+  display: inline-block;
 }
 
-.question-card {
-  flex: 1;
-  min-width: 300px;
-  background: white;
-  border-radius: 15px;
-  padding: 20px;
-}
-
-.question-card h3 {
-  text-align: center;
-  margin-bottom: 10px;
-}
-
-.options-container {
-  display: grid;
-  gap: 10px;
-}
-
-.option-btn {
-  padding: 15px;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
-  background: white;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.option-btn.correct {
-  background: #d4edda;
-  border-color: #28a745;
-}
-
-.option-btn.incorrect {
-  background: #f8d7da;
-  border-color: #dc3545;
-}
-
-.option-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-/* ====== Layout versi laptop / desktop ====== */
-@media (min-width: 992px) {
-
-  /* Bungkus utama agar center dan sejajar */
-  .game-screen.active {
-    display: flex;
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+@media (max-width: 1080px) {
+  .main-play-area {
     flex-direction: column;
     align-items: center;
-    gap: 20px;
   }
 
-  .game-header {
-    background: white;
-    border-radius: 15px;
-    padding: 20px 100px 20px 100px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 800px;
-  }
-
-  /* Susunan 3 bagian utama: kiri (Tim A), tengah (rope), kanan (Tim B) */
-  .main-play-area {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 40px;
+  .rope-center-zone {
     width: 100%;
-    max-width: 1200px;
-  }
-
-  /* Pastikan rope-container tidak terlalu lebar */
-  .rope-container {
-    flex: 0 0 auto;
-    width: 600px;
-    margin: 0;
-  }
-
-  /* Kartu soal kiri dan kanan */
-  .question-card {
-    flex: 0 0 300px;
-    margin: 0;
-  }
-
-  /* Supaya tidak double tampil di bawah tali */
-  .question-area {
-    display: none;
-  }
-
-  /* Versi desktop – tim A di kiri, tali di tengah, tim B di kanan */
-  #question-number-a {
+    max-width: 700px;
     order: 1;
   }
 
-  #question-number-b {
+  .team-touch-zone {
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .zone-a {
+    order: 2;
+  }
+
+  .zone-b {
     order: 3;
   }
 }
 
-/* Supaya tombol bisa disentuh secara bersamaan di layar sentuh */
-.option-btn {
-  touch-action: none;
-  /* Ini kuncinya */
-  pointer-events: auto;
-  /* Pastikan event tetap aktif */
-  user-select: none;
-  /* Biar nggak nge-seleksi teks */
-}
+@media (max-width: 640px) {
+  body {
+    padding: 10px 8px 60px 8px;
+  }
 
-/* === ZONA SENTUH KIRI & KANAN === */
-.team-touch-zone {
-  flex: 1;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 40px;
-  touch-action: manipulation;
-}
+  .game-top-bar {
+    padding: 10px 14px;
+    gap: 10px;
+  }
 
-/* SCALE 80% UNTUK KESELURUHAN BOARD */
-.scale {
-  transform: scale(0.9);
-  transform-origin: top center;
-  margin-top: 20px; /* adjust jika perlu */
-  /* margin-bottom: -10px; adjust jika perlu */
+  .timer-val {
+    font-size: 1.3rem;
+  }
+
+  .chip-val {
+    font-size: 1.1rem;
+  }
+
+  .rope-visual {
+    height: 105px;
+  }
+
+  .rope-container {
+    padding: 18px 14px;
+  }
+
+  .question-card {
+    padding: 18px 14px;
+  }
+
+  .question-text {
+    font-size: 0.95rem;
+    min-height: auto;
+  }
 }

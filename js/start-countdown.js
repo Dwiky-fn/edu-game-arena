@@ -17,7 +17,7 @@
       startBtn = document.createElement("button");
       startBtn.id = "start-btn";
       startBtn.className = "start-btn";
-      startBtn.textContent = "Mulai";
+      startBtn.textContent = "⚔️ Mulai Pertandingan";
       document.body.appendChild(startBtn);
     }
 
@@ -32,12 +32,12 @@
     if (!window.__gameReady) {
       startBtn.disabled = true;
       startBtn.style.opacity = "0.7";
-      startBtn.textContent = "Memuat...";
+      startBtn.textContent = "Memuat Soal...";
 
       window.__onGameReady = () => {
         startBtn.disabled = false;
         startBtn.style.opacity = "1";
-        startBtn.textContent = "Mulai";
+        startBtn.textContent = "⚔️ Mulai Pertandingan";
       };
     }
 
@@ -49,22 +49,29 @@
 
     function startCountdown() {
       // Urutan hitung mundur yang benar: 3 -> 2 -> 1 -> Mulai!
-      const seq = ["3", "2", "1", "Mulai!"];
+      const seq = ["3", "2", "1", "Mulai! ⚔️"];
       let i = 0;
 
-      countdown.style.display = "block";
+      countdown.style.display = "flex";
       countdown.textContent = seq[i];
+      countdown.classList.remove("animate-pop");
+      void countdown.offsetWidth;
+      countdown.classList.add("animate-pop");
 
       const interval = setInterval(() => {
         i++;
         if (i < seq.length) {
           countdown.textContent = seq[i];
+          countdown.classList.remove("animate-pop");
+          void countdown.offsetWidth;
+          countdown.classList.add("animate-pop");
         } else {
           clearInterval(interval);
           setTimeout(() => {
             countdown.style.display = "none";
+            countdown.classList.remove("animate-pop");
             runRealGame();
-          }, 400);
+          }, 500);
         }
       }, 1000);
     }

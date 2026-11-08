@@ -70,23 +70,33 @@ function renderQuestion(team) {
     `options-container-${team.toLowerCase()}`
   );
   const text = document.getElementById(`question-text-${team.toLowerCase()}`);
+  const progressEl = document.getElementById(`question-progress-${team.toLowerCase()}`);
 
   if (!pending || pending.length === 0) {
-    // Tim ini sudah menjawab semua soal benar → tampilkan info
     if (text) text.textContent = 'Semua soal sudah dijawab benar!';
     if (container) container.innerHTML = '';
-    return; // Jangan panggil checkWinner
+    if (progressEl) progressEl.textContent = 'Selesai ✓';
+    return;
   }
 
-  const q = pending[0]; // ambil soal pertama dari pending
+  const q = pending[0];
   if (text) text.textContent = q.pertanyaan;
+  if (progressEl) {
+    const currentNum = (isA ? gameState.teamAScore : gameState.teamBScore) + 1;
+    progressEl.textContent = `Soal ${currentNum}`;
+  }
+
   if (!container) return;
   container.innerHTML = '';
 
   ['a', 'b', 'c', 'd'].forEach((opt) => {
+    if (!q['opsi_' + opt]) return;
     const btn = document.createElement('button');
     btn.className = 'option-btn';
-    btn.textContent = `${opt.toUpperCase()}. ${q['opsi_' + opt]}`;
+    btn.innerHTML = `
+      <span class="opt-letter">${opt.toUpperCase()}</span>
+      <span class="opt-text">${q['opsi_' + opt]}</span>
+    `;
     btn.onclick = () => handleAnswer(team, opt.toUpperCase(), q, btn);
     container.appendChild(btn);
   });
@@ -103,7 +113,7 @@ function handleAnswer(team, selected, q, btn) {
   if (!container) return;
 
   container.querySelectorAll('button').forEach((b) => {
-    const letter = b.textContent[0];
+    const letter = b.querySelector('.opt-letter')?.textContent.trim() || b.textContent.trim()[0];
     if (letter === correct) b.classList.add('correct');
     if (letter === selected && selected !== correct)
       b.classList.add('incorrect');
@@ -126,9 +136,8 @@ function handleAnswer(team, selected, q, btn) {
 
     // ✅ Cek jika tim ini sudah selesai semua soal
     if (pending.length === 0) {
-      // tim ini menang langsung
-      if (gameState.interval) clearInterval(gameState.interval); // hentikan timer
-      checkWinner(team === 'A' ? gameState.teamAName : gameState.teamBName); // kirim tim yang menang
+      if (gameState.interval) clearInterval(gameState.interval);
+      checkWinner(team === 'A' ? gameState.teamAName : gameState.teamBName);
       return;
     }
   } else {
@@ -148,8 +157,13 @@ function moveRope(delta) {
 
   const tug = document.getElementById('tug-of-war');
   if (tug) {
-    const shift = (gameState.ropePos - 50) * 2;
+    const shift = (gameState.ropePos - 50) * 3;
     tug.style.transform = `translate(${shift}px, -50%)`;
+  }
+
+  const indicator = document.getElementById('pull-indicator');
+  if (indicator) {
+    indicator.style.left = `${gameState.ropePos}%`;
   }
 }
 
@@ -160,12 +174,17 @@ function updateScore() {
 
 function startTimer() {
   const timerEl = document.getElementById('timer');
+  const timerBox = document.getElementById('timer-box');
   clearInterval(gameState.interval);
   gameState.interval = setInterval(() => {
     gameState.timeLeft--;
     const m = Math.floor(gameState.timeLeft / 60);
     const s = gameState.timeLeft % 60;
     timerEl.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+
+    if (gameState.timeLeft <= 10 && timerBox) {
+      timerBox.classList.add('timer-warning');
+    }
 
     // game selesai hanya saat timer habis
     if (gameState.timeLeft <= 0) {
