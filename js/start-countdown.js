@@ -1,24 +1,8 @@
 // start-countdown.js
-// Add-on aman, tidak mengubah kode asli game.js.
-
 (function () {
   if (window.__countdownInstalled) return;
   window.__countdownInstalled = true;
 
-  // ========== 1. CEGAH GAME JALAN OTOMATIS ==========
-  // Kita intercept fungsi original, tapi tidak menghapusnya.
-  // Kita simpan dulu di variable agar tidak hilang.
-
-  const originalStartGame = window.startGame;
-  const originalRenderQuestion = window.renderQuestion;
-  const originalStartTimer = window.startTimer;
-
-  // Kita blok panggilan awal dari game.js:
-  window.startGame = function () {};
-  window.renderQuestion = function () {};
-  window.startTimer = function () {};
-
-  // ========== 2. TOMBOL & COUNTDOWN ==========
   function ready(fn) {
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", fn);
@@ -44,13 +28,28 @@
       document.body.appendChild(countdown);
     }
 
+    // Jika game belum siap (misal sedang memuat data soal), tunggu hingga ready
+    if (!window.__gameReady) {
+      startBtn.disabled = true;
+      startBtn.style.opacity = "0.7";
+      startBtn.textContent = "Memuat...";
+
+      window.__onGameReady = () => {
+        startBtn.disabled = false;
+        startBtn.style.opacity = "1";
+        startBtn.textContent = "Mulai";
+      };
+    }
+
     startBtn.addEventListener("click", () => {
+      if (startBtn.disabled) return;
       startBtn.style.display = "none";
       startCountdown();
     });
 
     function startCountdown() {
-      const seq = ["1", "2", "3", "Mulai!"];
+      // Urutan hitung mundur yang benar: 3 -> 2 -> 1 -> Mulai!
+      const seq = ["3", "2", "1", "Mulai!"];
       let i = 0;
 
       countdown.style.display = "block";
@@ -70,21 +69,14 @@
       }, 1000);
     }
 
-    // ========== 3. JALANKAN GAME ASLINYA ==========
+    // Jalankan game
     function runRealGame() {
       if (window.__gameStarted) return;
       window.__gameStarted = true;
 
-      // Kembalikan fungsi original
-      if (originalStartGame) window.startGame = originalStartGame;
-      if (originalRenderQuestion) window.renderQuestion = originalRenderQuestion;
-      if (originalStartTimer) window.startTimer = originalStartTimer;
-
-      // Jalankan game seperti biasa
-      try { if (originalStartGame) originalStartGame(); } catch (e) {}
-      try { if (originalRenderQuestion) originalRenderQuestion("A"); } catch (e) {}
-      try { if (originalRenderQuestion) originalRenderQuestion("B"); } catch (e) {}
-      try { if (originalStartTimer) originalStartTimer(); } catch (e) {}
+      if (typeof window.startGame === "function") {
+        window.startGame();
+      }
     }
   });
 })();

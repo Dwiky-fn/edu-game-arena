@@ -14,7 +14,7 @@ window.onload = async () => {
 
   // URL CSV hasil publish
   const CSV_URL =
-    'https://docs.google.com/spreadsheets/d/e/2PACX-1vTRUClOZxGW_LUmmKQd9homgWYR9pk7RlZDp_-0gzddEvyyrEr75aTomrPv5EbvEEpMvSQNN_YmpJyC/pub?output=csv';
+    'https://docs.google.com/spreadsheets/d/e/2PACX-1vScSL5vv82Lhjo2XSNVjGzlj6z4klh3CukZqTwmLymm9No4pmgWcoTF1dykLbG5nDyT0HiQ4TKmoMNR/pub?output=csv';
 
   const soal = await loadCSVQuestions(CSV_URL);
 
@@ -44,10 +44,24 @@ window.onload = async () => {
   document.getElementById('team-a-name').textContent = TEAM_A;
   document.getElementById('team-b-name').textContent = TEAM_B;
 
+  window.__gameReady = true;
+  if (typeof window.__onGameReady === 'function') {
+    window.__onGameReady();
+  }
+
+  // Jika start-countdown.js tidak dipasang, jalankan game langsung
+  if (!window.__countdownInstalled) {
+    startGame();
+  }
+};
+
+function startGame() {
+  if (gameState.interval) clearInterval(gameState.interval);
   renderQuestion('A');
   renderQuestion('B');
   startTimer();
-};
+}
+window.startGame = startGame;
 
 function renderQuestion(team) {
   const isA = team === 'A';
@@ -113,8 +127,8 @@ function handleAnswer(team, selected, q, btn) {
     // ✅ Cek jika tim ini sudah selesai semua soal
     if (pending.length === 0) {
       // tim ini menang langsung
-      clearInterval(gameState.interval); // hentikan timer
-      checkWinner(team); // kirim tim yang menang
+      if (gameState.interval) clearInterval(gameState.interval); // hentikan timer
+      checkWinner(team === 'A' ? gameState.teamAName : gameState.teamBName); // kirim tim yang menang
       return;
     }
   } else {
@@ -162,9 +176,13 @@ function startTimer() {
 }
 
 function checkWinner(directWinner = null) {
+  if (gameState.interval) clearInterval(gameState.interval);
+
   let winner = 'Seri';
   if (directWinner) {
-    winner = directWinner;
+    if (directWinner === 'A') winner = gameState.teamAName;
+    else if (directWinner === 'B') winner = gameState.teamBName;
+    else winner = directWinner;
   } else {
     if (gameState.teamAScore > gameState.teamBScore)
       winner = gameState.teamAName;
@@ -187,27 +205,56 @@ function checkWinner(directWinner = null) {
 }
 
 async function loadCSVQuestions(url) {
-  const res = await fetch(url);
-  const text = await res.text();
+  try {
+    const res = await fetch(url);
+    if (!res.ok) {
+      console.error(`Gagal memuat CSV: status ${res.status}`);
+      return null;
+    }
+    const text = await res.text();
 
-  const rows = text
-    .split('\n')
-    .map((r) => r.trim())
-    .filter(Boolean);
-  const header = rows[0].split(',').map((h) => h.trim());
+    function parseCSVRow(row) {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+      for (let i = 0; i < row.length; i++) {
+        const char = row[i];
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+          result.push(current.trim());
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      result.push(current.trim());
+      return result.map((s) => s.replace(/^"|"$/g, '').trim());
+    }
 
-  const questions = rows.slice(1).map((row) => {
-    const cols = row.split(',').map((c) => c.trim());
+    const rows = text
+      .split('\n')
+      .map((r) => r.trim())
+      .filter(Boolean);
 
-    return {
-      pertanyaan: cols[0],
-      opsi_a: cols[1],
-      opsi_b: cols[2],
-      opsi_c: cols[3],
-      opsi_d: cols[4],
-      jawaban_benar: cols[5]?.toUpperCase() || '',
-    };
-  });
+    if (rows.length < 2) return null;
 
-  return questions;
+    const questions = rows.slice(1).map((row) => {
+      const cols = parseCSVRow(row);
+
+      return {
+        pertanyaan: cols[0],
+        opsi_a: cols[1],
+        opsi_b: cols[2],
+        opsi_c: cols[3],
+        opsi_d: cols[4],
+        jawaban_benar: cols[5]?.toUpperCase() || '',
+      };
+    });
+
+    return questions;
+  } catch (err) {
+    console.error('Error saat fetch CSV:', err);
+    return null;
+  }
 }

@@ -1,22 +1,27 @@
 const result = JSON.parse(localStorage.getItem('gameResult'));
 
+const titleEl = document.getElementById('title');
+const winnerEl = document.getElementById('winner');
+const trophyEl = document.getElementById('trophy');
+const scoresDiv = document.getElementById('scores');
+
 if (!result) {
-  document.getElementById('title').textContent = 'Tidak Ada Data';
-  document.getElementById('winner').textContent = 'Belum ada pertandingan';
+  if (titleEl) titleEl.textContent = 'Tidak Ada Data';
+  if (winnerEl) winnerEl.textContent = 'Belum ada pertandingan';
 } else {
   // Tentukan pemenang
   if (result.winner === 'Seri') {
-    document.getElementById('trophy').textContent = '🤝';
-    document.getElementById('title').textContent = 'Seri!';
-    document.getElementById('winner').textContent = 'Kedua tim hebat!';
+    if (trophyEl) trophyEl.textContent = '🤝';
+    if (titleEl) titleEl.textContent = 'Seri!';
+    if (winnerEl) winnerEl.textContent = 'Kedua tim hebat!';
   } else {
-    document.getElementById('winner').textContent = result.winner;
+    if (winnerEl) winnerEl.textContent = result.winner;
     createConfetti();
   }
 
   // Tampilkan skor
-  const scoresDiv = document.getElementById('scores');
-  scoresDiv.innerHTML = `
+  if (scoresDiv) {
+    scoresDiv.innerHTML = `
         <div class="team ${result.winner === result.teamAName ? 'winner' : ''}">
           <h3>${result.teamAName}</h3>
           <div class="score">${result.teamAScore}</div>
@@ -26,6 +31,7 @@ if (!result) {
           <div class="score">${result.teamBScore}</div>
         </div>
       `;
+  }
 }
 
 function createConfetti() {
