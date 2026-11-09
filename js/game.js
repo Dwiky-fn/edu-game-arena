@@ -94,7 +94,7 @@ window.onload = async () => {
     teamAScore: 0,
     teamBScore: 0,
     ropePos: 50,
-    timeLeft: 60,
+    timeLeft: 480,
     teamAQuestions: shuffle([...soal]),
     teamBQuestions: shuffle([...soal]),
     teamAPending: shuffle([...soal]),
